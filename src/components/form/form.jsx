@@ -85,7 +85,7 @@ export default function Form() {
     }
 
     return (
-        <form onSubmit={salvarInfo} className="flex flex-col h-4/5 lg:w-2/5 w-auto bg-red-500 p-9 rounded-lg">
+        <form onSubmit={salvarInfo} className="flex flex-col h-auto sm:h-4/5 md:h-4/5 lg:h-4/5 lg:w-5/5 w-auto bg-red-500 p-9 rounded-lg">
             <Input valor={categoria} aoAlterado={valor => setCategoria(valor)} type='text' placeholder='Categoria do curso' />
             <Input valor={link} aoAlterado={valor => setLink(valor)} type='text' placeholder='Link certificação' />
             <Input valor={nome} aoAlterado={valor => setNome(valor)} type='text' placeholder='Nome do curso' />

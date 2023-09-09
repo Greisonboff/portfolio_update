@@ -1,3 +1,3 @@
 export default function Botao({texto}){
-    return <button className="bg-zinc-700 m-6 h-full rounded-md" type="submit">{texto}</button>
+    return <button className="bg-zinc-700 m-6 h-16 rounded-md" type="submit">{texto}</button>
 }
