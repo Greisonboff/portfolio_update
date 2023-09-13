@@ -5,17 +5,20 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npx tailwindcss -i ./src/index.css -o ./dist/output.css --watch",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
     "autoprefixer": "^10.4.15",
+    "axios": "^1.5.0",
     "postcss": "^8.4.29",
     "postcss-cli": "^10.1.0",
     "primereact": "^9.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.11.0",
+    "react-router-dom": "^6.15.0",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
   },

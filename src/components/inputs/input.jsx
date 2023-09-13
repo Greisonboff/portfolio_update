@@ -7,7 +7,7 @@ export default function Input({ type, placeholder, aoAlterado, valor }) {
     return (
         <>
             <TituloInput texto={placeholder} />
-            <input className="p-2 rounded-md" type={type} onChange={aoDigitado} value={valor} required placeholder={placeholder}></input>
+            <input className="outline-none p-2 rounded-md font-semibold" type={type} onChange={aoDigitado} value={valor} required placeholder={placeholder}></input>
         </>
     )
 }
