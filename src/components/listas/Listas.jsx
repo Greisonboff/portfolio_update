@@ -2,6 +2,7 @@ import { useState } from "react";
 import Botao_navegacao from "../botao_navegacao/Botao_navegacao";
 import axios from "axios";
 import Input from "../inputs/Input";
+import Li from "../component_list/Li";
 
 export default function Listas() {
     const [texto, setTexto] = useState([]);
@@ -67,9 +68,9 @@ export default function Listas() {
                 {texto.map(item =>
                     <>
                         <ul key={item.nome_curso} className="flex flex-col m-1 ">
-                            <li className="flex ">{item.categoria}</li>
-                            <li className="flex ">{item.nome_curso}</li>
-                            <li className="flex ">{item.link}</li>
+                            <Li param='Categoria: ' item={item.categoria} />
+                            <Li param='Nome do curso: ' item={item.nome_curso} />
+                            <Li param='Link: ' item={item.link} />
                         </ul>
                         <hr className="" />
                     </>
@@ -78,10 +79,10 @@ export default function Listas() {
                 {textoP.map(item =>
                     <>
                         <ul key={item.nome_curso} className="flex flex-col m-1 ">
-                            <li className="flex ">Projeto: {item.nome_projeto}</li>
-                            <li className="flex ">Descrição: {item.descricao}</li>
-                            <li className="flex ">Link da imagem: {item.caminho_imagem}</li>
-                            <li className="flex ">Link do projeto: {item.link}</li>
+                            <Li param='Projeto:' item={item.nome_projeto} />
+                            <Li param='Descrição:' item={item.descricao} />
+                            <Li param='Link da imagem:' item={item.caminho_imagem} />
+                            <Li param='Link do projeto:' item={item.link} />
                         </ul>
                         <hr className="" />
                     </>

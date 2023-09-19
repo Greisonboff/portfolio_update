@@ -74,7 +74,7 @@ export default function Form() {
     }
 
     return (
-        <form onSubmit={salvarInfo} className="shadow-white shadow flex flex-col h-auto sm:h-4/5 md:h-4/5 lg:h-4/5 lg:w-5/5 w-auto bg-transparent p-9 rounded-lg m-2 lg:m-5">
+        <form onSubmit={salvarInfo} className="shadow-white shadow flex flex-col h-auto sm:h-4/5 md:h-4/5 lg:h-4/5 lg:w-1/2 sm:w-1/2 w-auto bg-transparent p-5 rounded-lg m-2 lg:m-5">
             <TituloForm titulo={'Cadastrar nova certificação'} />
             <Input valor={categoria} aoAlterado={valor => setCategoria(valor)} type='text' placeholder='Categoria do curso' />
             <Input valor={link} aoAlterado={valor => setLink(valor)} type='text' placeholder='Link certificação' />
