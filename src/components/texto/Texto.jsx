@@ -1,4 +1,4 @@
-import TituloInput from "../title_input/TituloInput"
+import TituloInput from "../titleInput/TituloInput"
 
 export default function Texto({ type, placeholder, aoAlterado, valor }) {
     const aoDigitado = (event) => {
@@ -8,7 +8,7 @@ export default function Texto({ type, placeholder, aoAlterado, valor }) {
     return (
         <>
             <TituloInput texto={placeholder} />
-            <textarea className="outline-none p-2 rounded-md font-semibold h-56" type={type} onChange={aoDigitado} value={valor} required placeholder={placeholder}></textarea>
+            <textarea className="placeholder-slate-600 bg-slate-200 outline-none p-2 rounded-md font-semibold h-56" type={type} onChange={aoDigitado} value={valor} required placeholder={placeholder}></textarea>
         </>
     )
 }

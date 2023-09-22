@@ -1,13 +1,15 @@
 import { useState } from "react";
-import Botao_navegacao from "../botao_navegacao/Botao_navegacao";
+import Botao_navegacao from "../botaoNavegacao/BotaoNavegacao";
 import axios from "axios";
 import Input from "../inputs/Input";
-import Li from "../component_list/Li";
+import Li from "../componentList/Li";
+import Erro from "../erro/Erro";
 
 export default function Listas() {
-    const [texto, setTexto] = useState([]);
-    const [textoP, setTextoP] = useState([]);
+    const [textoCertificados, setTextoCertificados] = useState([]);
+    const [textoProjetos, setTextoProjetos] = useState([]);
     const [chave, setChave] = useState('')
+    const [erro, setErro] = useState('')
 
     const pega = (chave, ativador) => {
         // Defina as informações do repositório e do arquivo
@@ -36,23 +38,33 @@ export default function Listas() {
             .then((response) => {
                 const currentContent = JSON.parse(decodeURIComponent(escape(atob(response.data.content))));
                 if (ativador === "Listar certificados") {
-                    setTexto(currentContent)
-                    setTextoP([])
+                    setTextoProjetos([])
+                    setTextoCertificados(currentContent)
                 } else {
-                    setTextoP(currentContent)
-                    setTexto([])
+                    setTextoCertificados([])
+                    setTextoProjetos(currentContent)
                 }
-                console.log(decodeURIComponent(escape(atob(response.data.content))))
             })
             .catch((error) => {
                 console.error('Erro:', error);
+                setTextoCertificados([])
+                setTextoProjetos([])
+                ativaErro('Erro ao buscar os dados')
             });
     }
+
     const ativaPega = () => {
-        console.log(event.target.innerText)
-        //pega(chave);
-        pega('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', event.target.innerText);
+        pega(chave, event.target.innerText);
     }
+
+    const ativaErro = (e) => {
+        setErro(e);
+
+        setTimeout(() => {
+            setErro('');
+        }, 3000);
+    }
+
     return (
         <div className="flex flex-col w-full sm:w-3/5 lg:w-3/5 px-8">
             <div>
@@ -64,27 +76,28 @@ export default function Listas() {
                     <Input valor={chave} aoAlterado={valor => setChave(valor)} type='text' placeholder='Chave de acesso' />
                 </div>
             </div>
+            <Erro texto={erro} />
             <div className="break-all">
-                {texto.map(item =>
+                {textoCertificados.map((item, index) =>
                     <>
-                        <ul key={item.nome_curso} className="flex flex-col m-1 ">
+                        <ul key={index} className="flex flex-col m-1 ">
                             <Li param='Categoria: ' item={item.categoria} />
                             <Li param='Nome do curso: ' item={item.nome_curso} />
                             <Li param='Link: ' item={item.link} />
                         </ul>
-                        <hr className="" />
+                        <hr/>
                     </>
                 )}
 
-                {textoP.map(item =>
+                {textoProjetos.map((item, index) =>
                     <>
-                        <ul key={item.nome_curso} className="flex flex-col m-1 ">
+                        <ul key={index} className="flex flex-col m-1 ">
                             <Li param='Projeto:' item={item.nome_projeto} />
                             <Li param='Descrição:' item={item.descricao} />
                             <Li param='Link da imagem:' item={item.caminho_imagem} />
                             <Li param='Link do projeto:' item={item.link} />
                         </ul>
-                        <hr className="" />
+                        <hr/>
                     </>
                 )}
             </div>

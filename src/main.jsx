@@ -1,11 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import Box from './components/box_grup/box'
+import Box from './components/boxGrup/box'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Listas from './components/listas/Listas';
-import Form from './components/form_certification/Form_certification';
-import FormProject from './components/form_project/FormProject';
+import Form from './components/formCertification/FormCertification';
+import FormProject from './components/formProject/FormProject';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
 
