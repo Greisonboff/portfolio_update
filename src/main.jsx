@@ -12,7 +12,7 @@ import Home from './components/home/Home';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-    <Header/>
+      <Header />
       <Routes>
         <Route path='/' element={<Box element={[Home]} />} />
         <Route path='/certificado' element={<Box element={[Form]} />} />
