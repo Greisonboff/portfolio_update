@@ -1,3 +1,3 @@
 export default function Li({param,item}){
-    return <li className=" text-gray-300">{param} &nbsp; <span className="text-white">{item}</span></li>
+    return <li className=" dark:text-gray-300 text-gray-500 ">{param} &nbsp; <span className=" dark:text-white text-slate-950">{item}</span></li>
 }
