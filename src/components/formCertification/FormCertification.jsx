@@ -30,6 +30,7 @@ export default function Form() {
 
         axios.get(apiUrl, config)
             .then((response) => {
+                localStorage.setItem('chave_de_acesso_github',token);
                 const currentContent = JSON.parse(decodeURIComponent(escape(atob(response.data.content))));
 
                 // Modifique o conteúdo do arquivo conforme necessário

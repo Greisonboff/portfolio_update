@@ -50,6 +50,7 @@ export default function FormProject() {
                     .catch((error) => {
                         console.error('Erro:', error);
                     });
+                localStorage.setItem('chave_de_acesso_github',token);
             })
             .catch((error) => {
                 console.error('Erro:', error);

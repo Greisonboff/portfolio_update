@@ -44,6 +44,7 @@ export default function Listas() {
                     setTextoCertificados([])
                     setTextoProjetos(currentContent)
                 }
+                localStorage.setItem('chave_de_acesso_github',token);
             })
             .catch((error) => {
                 console.error('Erro:', error);
