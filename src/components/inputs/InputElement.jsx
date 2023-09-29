@@ -1,6 +1,6 @@
 import TituloInput from "../titleInput/TituloInput"
 
-export default function Input({ type, placeholder, aoAlterado, valor }) {
+export default function InputElement({ type, placeholder, aoAlterado, valor }) {
     const aoDigitado = (event) => {
         aoAlterado(event.target.value)
     }

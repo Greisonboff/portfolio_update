@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Botao from "../botao/botao";
-import Input from "../inputs/Input";
+import InputElement from "../inputs/InputElement";
 import TituloForm from "../titleFrom/TituloFrom";
 import axios from "axios";
 
@@ -75,11 +75,11 @@ export default function Form() {
     return (
         <form onSubmit={salvarInfo} className="shadow-white shadow flex flex-col h-min lg:w-1/2 sm:w-1/2 w-auto bg-transparent p-5 pb-0 rounded-lg m-2 lg:m-5">
             <TituloForm titulo={'Cadastrar nova certificação'} />
-            <Input valor={categoria} aoAlterado={valor => setCategoria(valor)} type='text' placeholder='Categoria do curso' />
-            <Input valor={link} aoAlterado={valor => setLink(valor)} type='text' placeholder='Link certificação' />
-            <Input valor={nome} aoAlterado={valor => setNome(valor)} type='text' placeholder='Nome do curso' />
-            <Input valor={msg} aoAlterado={valor => setMsg(valor)} type='text' placeholder='Mensegem de atualização da versão' />
-            <Input valor={chave} aoAlterado={valor => setChave(valor)} type='text' placeholder='Chave de acesso' />
+            <InputElement valor={categoria} aoAlterado={valor => setCategoria(valor)} type='text' placeholder='Categoria do curso' />
+            <InputElement valor={link} aoAlterado={valor => setLink(valor)} type='text' placeholder='Link certificação' />
+            <InputElement valor={nome} aoAlterado={valor => setNome(valor)} type='text' placeholder='Nome do curso' />
+            <InputElement valor={msg} aoAlterado={valor => setMsg(valor)} type='text' placeholder='Mensegem de atualização da versão' />
+            <InputElement valor={chave} aoAlterado={valor => setChave(valor)} type='text' placeholder='Chave de acesso' />
             <Botao texto='Salvar' />
         </form>
     )

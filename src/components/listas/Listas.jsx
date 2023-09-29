@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Botao_navegacao from "../botaoNavegacao/BotaoNavegacao";
 import axios from "axios";
-import Input from "../inputs/Input";
+import InputElement from "../inputs/InputElement";
 import Li from "../componentList/Li";
 import Erro from "../erro/Erro";
 
@@ -78,7 +78,7 @@ export default function Listas() {
                     <Botao_navegacao funcao={ativaPega} text="Listar projetos" />
                 </div>
                 <div className="break-all flex flex-col justify-center">
-                    <Input valor={chaveLocal ? chaveLocal : chave} aoAlterado={valor => setChave(valor)} type='text' placeholder='Chave de acesso' />
+                    <InputElement valor={chaveLocal ? chaveLocal : chave} aoAlterado={valor => setChave(valor)} type='text' placeholder='Chave de acesso' />
                 </div>
             </div>
             <Erro texto={erro} />
