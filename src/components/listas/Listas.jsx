@@ -73,7 +73,7 @@ export default function Listas() {
                     <Botao_navegacao funcao={ativaPega} text="Listar projetos" />
                 </div>
                 <div className="break-all flex flex-col justify-center">
-                    <Input valor={chave} aoAlterado={valor => setChave(valor)} type='text' placeholder='Chave de acesso' />
+                    
                 </div>
             </div>
             <Erro texto={erro} />
