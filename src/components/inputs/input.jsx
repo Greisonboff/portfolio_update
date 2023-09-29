@@ -5,12 +5,6 @@ export default function Input({ type, placeholder, aoAlterado, valor }) {
         aoAlterado(event.target.value)
     }
 
-    const chave = localStorage.getItem('chave_de_acesso_github');
-    if (placeholder === 'Chave de acesso' && chave) {
-        valor = chave;
-        aoAlterado(chave)
-    }
-
     return (
         <>
             <TituloInput texto={placeholder} />

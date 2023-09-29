@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Botao_navegacao from "../botaoNavegacao/BotaoNavegacao";
 import axios from "axios";
 import Input from "../inputs/Input";
@@ -65,6 +65,11 @@ export default function Listas() {
         }, 3000);
     }
 
+    const chaveLocal = localStorage.getItem('chave_de_acesso_github');
+    useEffect(() => {
+        chaveLocal ? setChave(chaveLocal) : '';
+    }, [])
+
     return (
         <div className="flex flex-col w-full sm:w-3/5 lg:w-3/5 px-8">
             <div>
@@ -73,34 +78,34 @@ export default function Listas() {
                     <Botao_navegacao funcao={ativaPega} text="Listar projetos" />
                 </div>
                 <div className="break-all flex flex-col justify-center">
-                    
+                    <Input valor={chaveLocal ? chaveLocal : chave} aoAlterado={valor => setChave(valor)} type='text' placeholder='Chave de acesso' />
                 </div>
             </div>
             <Erro texto={erro} />
             <div className="break-all">
                 {textoCertificados.map((item, index) =>
-                    <>
-                        <ul key={index} className="flex flex-col m-1 ">
+                    <div key={index}>
+                        <ul className="flex flex-col m-1 ">
                             <Li param='Categoria: ' item={item.categoria} />
                             <Li param='Nome do curso: ' item={item.nome_curso} />
                             <Li param='Link: ' item={item.link} />
                         </ul>
-                        <hr/>
-                    </>
+                        <hr />
+                    </div>
                 )}
 
                 {textoProjetos.map((item, index) =>
-                    <>
-                        <ul key={index} className="flex flex-col m-1 ">
+                    <div key={index}>
+                        <ul className="flex flex-col m-1 ">
                             <Li param='Projeto:' item={item.nome_projeto} />
                             <Li param='Descrição:' item={item.descricao} />
                             <Li param='Link da imagem:' item={item.caminho_imagem} />
                             <Li param='Link do projeto:' item={item.link} />
                         </ul>
-                        <hr/>
-                    </>
+                        <hr />
+                    </div>
                 )}
-            </div>
+            </div >
         </div>
     )
 }
