@@ -1,6 +1,7 @@
 import Link_header from "./LinkHeader";
 import ToggleTheme from "../toggle/ToggleTheme";
 import { GiHamburgerMenu } from "react-icons/gi"
+import logo from "../../imagens/go-code5.png"
 
 export default function Header() {
     const ativaMenu = () => {
@@ -14,7 +15,7 @@ export default function Header() {
                 <GiHamburgerMenu className="dark:text-gray-100 h-6 w-6 sm:hidden" onClick={ativaMenu} />
             </div>
             <div className="sm:hidden">
-                <img className="h-8 w-36 rounded dark:brightness-50" src='/src/imagens/go-code5.png'></img>
+                <img className="h-8 w-36 rounded dark:brightness-50" src={logo}></img>
             </div>
             <div className="hidden sm:flex absolute sm:relative left-0 z-10 bg-zinc-100 dark:bg-zinc-800 flex-col sm:flex-row border-[1px] border-solid border-black rounded rounded-tl-none translate-y-10 sm:border-none sm:translate-y-0 menu-links">
                 <Link_header fechaMenu={ativaMenu} caminho="/" texto="Home" />
