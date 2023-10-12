@@ -5,10 +5,10 @@ import InputElement from "../inputs/InputElement";
 import Li from "../componentList/Li";
 import Erro from "../erro/Erro";
 
-export default function Listas() {
+export default function Listas({dataChave}) {
     const [textoCertificados, setTextoCertificados] = useState([]);
     const [textoProjetos, setTextoProjetos] = useState([]);
-    const [chave, setChave] = useState('')
+    const [chave, setChave] = useState(dataChave())
     const [erro, setErro] = useState('')
 
     const pega = (chave, ativador) => {
@@ -66,11 +66,6 @@ export default function Listas() {
         }, 3000);
     }
 
-    const chaveLocal = localStorage.getItem('chave_de_acesso_github');
-    useEffect(() => {
-        chaveLocal ? setChave(chaveLocal) : '';
-    }, [])
-
     return (
         <div className="flex flex-col w-full sm:w-3/5 lg:w-3/5 px-8">
             <div>
@@ -79,7 +74,7 @@ export default function Listas() {
                     <Botao_navegacao funcao={ativaPega} text="Listar projetos" />
                 </div>
                 <div className="break-all flex flex-col justify-center">
-                    <InputElement valor={chaveLocal ? chaveLocal : chave} aoAlterado={valor => setChave(valor)} type='text' placeholder='Chave de acesso' />
+                    <InputElement valor={chave} aoAlterado={valor => setChave(valor)} type='text' placeholder='Chave de acesso' />
                 </div>
             </div>
             <Erro texto={erro} />

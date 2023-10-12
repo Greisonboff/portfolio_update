@@ -4,8 +4,19 @@ import InputElement from "../inputs/InputElement";
 import TituloForm from "../titleFrom/TituloFrom";
 import axios from 'axios';
 import Texto from "../texto/Texto";
+import Loader from "../../load/Loader";
+import Status from "../../status/Status";
 
-export default function FormProject() {
+export default function FormProject({ dataChave }) {
+    const [descricao, setDescricao] = useState('')
+    const [link, setLink] = useState('')
+    const [nome, setNome] = useState('')
+    const [chave, setChave] = useState(dataChave())
+    const [msg, setMsg] = useState('')
+    const [img, setImg] = useState('')
+    const [load, setLoad] = useState('')
+    const [retorno, setRetorno] = useState('')
+
     const envia = (descricao, link, nome, img, msg, chave) => {
         // Defina as informações do repositório e do arquivo
         const owner = 'Greisonboff'; // Substitua pelo nome do proprietário do repositório
@@ -46,38 +57,37 @@ export default function FormProject() {
                 // Faça uma solicitação PUT para atualizar o arquivo
                 axios.put(apiUrl, JSON.stringify(newData), { headers })
                     .then((response) => {
+                        setLoad()
+                        setRetorno('Projeto cadastrado com sucesso!')
+                        localStorage.setItem('chave_de_acesso_github', token);
                     })
                     .catch((error) => {
+                        setLoad()
+                        setRetorno('Erro tente novamente!')
                         console.error('Erro:', error);
                     });
-                localStorage.setItem('chave_de_acesso_github',token);
             })
             .catch((error) => {
+                setLoad()
+                setRetorno('Erro tente novamente!')
                 console.error('Erro:', error);
             });
     }
 
-    const [descricao, setDescricao] = useState('')
-    const [link, setLink] = useState('')
-    const [nome, setNome] = useState('')
-    const [chave, setChave] = useState('')
-    const [msg, setMsg] = useState('')
-    const [img, setImg] = useState('')
-
     const salvarInfoProjeto = () => {
+        setLoad(true)
         event.preventDefault();
         envia(descricao, link, nome, img, msg, chave)
-        //setDescricao('')
-        //setLink('')
-        //setNome('')
-        //setMsg('')
-        //setImg('')
-        //setChave('')
+        setDescricao('')
+        setLink('')
+        setNome('')
+        setMsg('')
+        setImg('')
     }
 
     return (
         <>
-            <form onSubmit={salvarInfoProjeto} className="shadow-white shadow flex flex-col lg:h-full lg:w-1/2 sm:w-1/2 w-auto bg-transparent p-5 pb-0 rounded-lg m-2 lg:m-5">
+            <form onSubmit={salvarInfoProjeto} className="shadow-black dark:shadow-white shadow flex flex-col lg:h-full lg:w-1/2 sm:w-1/2 w-auto bg-transparent p-5 sm:pb-0 rounded-lg m-2 lg:m-5">
                 <TituloForm titulo={'Cadastrar novo projeto'} />
                 <InputElement valor={nome} aoAlterado={valor => setNome(valor)} type='text' placeholder='Nome do projeto' />
                 <InputElement valor={link} aoAlterado={valor => setLink(valor)} type='text' placeholder='Link do projeto' />
@@ -85,7 +95,18 @@ export default function FormProject() {
                 <InputElement valor={img} aoAlterado={valor => setImg(valor)} type='text' placeholder='Caminho das imagens' />
                 <InputElement valor={msg} aoAlterado={valor => setMsg(valor)} type='text' placeholder='Mensegem de atualização da versão' />
                 <InputElement valor={chave} aoAlterado={valor => setChave(valor)} type='text' placeholder='Chave de acesso' />
-                <Botao texto='Salvar' />
+                {load != true &&
+                    retorno == '' &&
+                    nome != '' &&
+                    link != '' &&
+                    descricao != '' &&
+                    img != '' &&
+                    msg != '' &&
+                    chave != '' ? <Botao texto='Salvar' /> : ''}
+                <div className="flex m-auto">
+                    {load == true ? <Loader /> : ''}
+                    {retorno != '' ? <Status estado={setRetorno} retorno={retorno} /> : ''}
+                </div>
             </form>
             <div className="h-5 w-full bg-transparent"></div>
         </>

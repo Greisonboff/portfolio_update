@@ -3,8 +3,18 @@ import Botao from "../botao/botao";
 import InputElement from "../inputs/InputElement";
 import TituloForm from "../titleFrom/TituloFrom";
 import axios from "axios";
+import Loader from "../../load/Loader";
+import Status from "../../status/Status";
 
-export default function Form() {
+export default function Form({ dataChave }) {
+    const [categoria, setCategoria] = useState('')
+    const [link, setLink] = useState('')
+    const [nome, setNome] = useState('')
+    const [chave, setChave] = useState(dataChave())
+    const [msg, setMsg] = useState('')
+    const [load, setLoad] = useState('')
+    const [retorno, setRetorno] = useState('')
+
     const envia = (categoria, link, nome, msg, chave) => {
         // Defina as informações do repositório e do arquivo
         const owner = 'Greisonboff'; // Substitua pelo nome do proprietário do repositório
@@ -30,7 +40,6 @@ export default function Form() {
 
         axios.get(apiUrl, config)
             .then((response) => {
-                localStorage.setItem('chave_de_acesso_github',token);
                 const currentContent = JSON.parse(decodeURIComponent(escape(atob(response.data.content))));
 
                 // Modifique o conteúdo do arquivo conforme necessário
@@ -47,23 +56,25 @@ export default function Form() {
                 // Faça uma solicitação PUT para atualizar o arquivo
                 axios.put(apiUrl, JSON.stringify(newData), { headers })
                     .then((response) => {
+                        setLoad()
+                        setRetorno('Certificado cadastrado com sucesso!')
+                        localStorage.setItem('chave_de_acesso_github', token);
                     })
                     .catch((error) => {
+                        setLoad()
+                        setRetorno('Erro tente novamente!')
                         console.error('Erro:', error);
                     });
             })
             .catch((error) => {
+                setLoad()
+                setRetorno('Erro tente novamente!')
                 console.error('Erro:', error);
             });
     }
 
-    const [categoria, setCategoria] = useState('')
-    const [link, setLink] = useState('')
-    const [nome, setNome] = useState('')
-    const [chave, setChave] = useState('')
-    const [msg, setMsg] = useState('')
-
     const salvarInfo = () => {
+        setLoad(true)
         event.preventDefault();
         envia(categoria, link, nome, msg, chave)
         setCategoria('')
@@ -74,14 +85,23 @@ export default function Form() {
     }
 
     return (
-        <form onSubmit={salvarInfo} className="shadow-white shadow flex flex-col h-min lg:w-1/2 sm:w-1/2 w-auto bg-transparent p-5 pb-0 rounded-lg m-2 lg:m-5">
+        <form onSubmit={salvarInfo} className="shadow-black dark:shadow-white shadow flex flex-col sm:h-4/5 h-min lg:w-1/2 sm:w-1/2 w-auto bg-transparent p-5 rounded-lg m-2 lg:m-5">
             <TituloForm titulo={'Cadastrar nova certificação'} />
             <InputElement valor={categoria} aoAlterado={valor => setCategoria(valor)} type='text' placeholder='Categoria do curso' />
             <InputElement valor={link} aoAlterado={valor => setLink(valor)} type='text' placeholder='Link certificação' />
             <InputElement valor={nome} aoAlterado={valor => setNome(valor)} type='text' placeholder='Nome do curso' />
             <InputElement valor={msg} aoAlterado={valor => setMsg(valor)} type='text' placeholder='Mensegem de atualização da versão' />
             <InputElement valor={chave} aoAlterado={valor => setChave(valor)} type='text' placeholder='Chave de acesso' />
-            <Botao texto='Salvar' />
+            {load != true &&
+                retorno == '' &&
+                nome != '' &&
+                link != '' &&
+                msg != '' &&
+                chave != '' ? <Botao texto='Salvar' /> : ''}
+            <div className="flex m-auto">
+                {load == true ? <Loader /> : ''}
+                {retorno != '' ? <Status estado={setRetorno} retorno={retorno} /> : ''}
+            </div>
         </form>
     )
 }

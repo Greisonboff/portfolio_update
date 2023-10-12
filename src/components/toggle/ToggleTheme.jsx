@@ -24,7 +24,7 @@ const ToggleTheme = () => {
         localStorage.getItem('theme') == 'dark' ? localStorage.setItem('theme', 'light') : localStorage.setItem('theme', 'dark');
     }
     return (
-        <div className="hidden sm:block">
+        <div className="block">
             <BsMoonStars className=" h-6 w-6 text-gray-900 block dark:hidden cursor-pointer" onClick={toggle} />
             <FiSun className="h-6 w-6 text-gray-100  hidden dark:block cursor-pointer" onClick={toggle} />
         </div>

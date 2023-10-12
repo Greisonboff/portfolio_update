@@ -8,6 +8,7 @@ import Form from './components/formCertification/FormCertification';
 import FormProject from './components/formProject/FormProject';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
+import UpImg from './components/uploadImg/formUploadImg';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -18,6 +19,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path='/certificado' element={<Box element={[Form]} />} />
         <Route path='/projeto' element={<Box element={[FormProject]} />} />
         <Route path='/listas' element={<Box element={[Listas]} />} />
+        <Route path='/up-img' element={<Box element={[UpImg]} />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

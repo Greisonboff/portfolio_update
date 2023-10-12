@@ -4,7 +4,7 @@ export default function InputElement({ type, placeholder, aoAlterado, valor }) {
     const aoDigitado = (event) => {
         aoAlterado(event.target.value)
     }
-
+    
     return (
         <>
             <TituloInput texto={placeholder} />
