@@ -20,7 +20,7 @@ export default function Header() {
                 <Link_header fechaMenu={ativaMenu} caminho="/certificado" texto="Certificado" />
                 <Link_header fechaMenu={ativaMenu} caminho="/projeto" texto="Projeto" />
                 <Link_header fechaMenu={ativaMenu} caminho="/listas" texto="Listas" />
-                <Link_header fechaMenu={ativaMenu} caminho="/up-img" texto="imagens" />
+                <Link_header fechaMenu={ativaMenu} caminho="/up-img" texto="Imagens" />
             </div>
             <div className="mx-6 sm:mx-3 h-8 relative sm:absolute sm:right-10">
                 <ToggleTheme />
