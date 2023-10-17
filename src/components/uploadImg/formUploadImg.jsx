@@ -117,7 +117,7 @@ export default function UpImg({ dataChave }) {
                 axios.put(apiUrl, JSON.stringify(newData), { headers })
                     .then((response) => {
                         setLoad()
-                        setRetorno('Projeto cadastrado com sucesso!')
+                        setRetorno('Objeto de imagens atualizado com sucesso!')
                         localStorage.setItem('chave_de_acesso_github', token);
                     })
                     .catch((error) => {
