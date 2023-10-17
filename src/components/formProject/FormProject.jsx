@@ -10,6 +10,7 @@ import Status from "../../status/Status";
 export default function FormProject({ dataChave }) {
     const [descricao, setDescricao] = useState('')
     const [link, setLink] = useState('')
+    const [linkGit, setLinkGit] = useState('')
     const [nome, setNome] = useState('')
     const [chave, setChave] = useState(dataChave())
     const [msg, setMsg] = useState('')
@@ -17,7 +18,7 @@ export default function FormProject({ dataChave }) {
     const [load, setLoad] = useState('')
     const [retorno, setRetorno] = useState('')
 
-    const envia = (descricao, link, nome, img, msg, chave) => {
+    const envia = (descricao, link, linkGit, nome, img, msg, chave) => {
         // Defina as informações do repositório e do arquivo
         const owner = 'Greisonboff'; // Substitua pelo nome do proprietário do repositório
         const repo = 'data-center'; // Substitua pelo nome do repositório
@@ -44,7 +45,7 @@ export default function FormProject({ dataChave }) {
                 const currentContent = JSON.parse(decodeURIComponent(escape(atob(response.data.content))));
 
                 // Modifique o conteúdo do arquivo conforme necessário
-                var dataAdd = { nome_projeto: nome, descricao: descricao, link: link, caminho_imagem: img }
+                var dataAdd = { nome_projeto: nome, descricao: descricao, link: link, link_git: linkGit, caminho_imagem: img }
                 currentContent.unshift(dataAdd);
 
                 // Construa os dados para a atualização
@@ -77,7 +78,7 @@ export default function FormProject({ dataChave }) {
     const salvarInfoProjeto = () => {
         setLoad(true)
         event.preventDefault();
-        envia(descricao, link, nome, img, msg, chave)
+        envia(descricao, link, linkGit, nome, img, msg, chave)
         setDescricao('')
         setLink('')
         setNome('')
@@ -87,10 +88,11 @@ export default function FormProject({ dataChave }) {
 
     return (
         <>
-            <form onSubmit={salvarInfoProjeto} className="shadow-black dark:shadow-white shadow flex flex-col lg:h-full lg:w-1/2 sm:w-1/2 w-auto bg-transparent p-5 rounded-lg m-2 lg:m-5">
+            <form onSubmit={salvarInfoProjeto} className="shadow-black dark:shadow-white shadow flex flex-col lg:h-[110%] lg:w-1/2 sm:w-1/2 w-auto bg-transparent p-5 rounded-lg m-2 lg:m-5">
                 <TituloForm titulo={'Cadastrar novo projeto'} />
                 <InputElement valor={nome} aoAlterado={valor => setNome(valor)} type='text' placeholder='Nome do projeto' />
                 <InputElement valor={link} aoAlterado={valor => setLink(valor)} type='text' placeholder='Link do projeto' />
+                <InputElement valor={linkGit} aoAlterado={valor => setLinkGit(valor)} type='text' placeholder='Link do github' />
                 <Texto valor={descricao} aoAlterado={valor => setDescricao(valor)} type='text' placeholder='Descição do projeto' />
                 <InputElement valor={img} aoAlterado={valor => setImg(valor)} type='text' placeholder='Caminho das imagens' />
                 <InputElement valor={msg} aoAlterado={valor => setMsg(valor)} type='text' placeholder='Mensegem de atualização da versão' />
