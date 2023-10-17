@@ -81,6 +81,7 @@ export default function FormProject({ dataChave }) {
         envia(descricao, link, linkGit, nome, img, msg, chave)
         setDescricao('')
         setLink('')
+        setLinkGit('')
         setNome('')
         setMsg('')
         setImg('')
