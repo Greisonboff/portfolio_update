@@ -12,6 +12,7 @@ export default function UpImg({ dataChave }) {
     const [img, setImg] = useState('')
     const [load, setLoad] = useState('')
     const [retorno, setRetorno] = useState('')
+    const objImagens = [];
 
     const uploadImage = (imgTxt, tk) => {
         event.preventDefault();
@@ -30,8 +31,8 @@ export default function UpImg({ dataChave }) {
 
         //Array.from(fileInput).forEach((file, index) => {
         const send = (file, index, imgTxt) => {
-            let txt = imgTxt + index;
-            let apiUrl = `https://api.github.com/repos/${username}/${repoName}/contents/imagens/${txt + '.png'}`;
+            let txt = imgTxt + index + '.png';
+            let apiUrl = `https://api.github.com/repos/${username}/${repoName}/contents/imagens/${txt}`;
             let reader = new FileReader();
 
             reader.onload = function (event) {
@@ -48,12 +49,14 @@ export default function UpImg({ dataChave }) {
                 })
                     .then(function (response) {
                         console.log(response.status);
+                        objImagens.push({image: txt});
                         if (fileInput[index + 1]) {
                             send(fileInput[index + 1], index + 1, imgTxt);
                         } else {
                             localStorage.setItem('chave_de_acesso_github', token);
                             setLoad('')
                             setRetorno('Imagens enviadas com sucesso!')
+                            enviaObJImg(token, objImagens, imgTxt)
                         }
                     })
                     .catch(function (error) {
@@ -70,6 +73,65 @@ export default function UpImg({ dataChave }) {
         if (fileInput) {
             send(fileInput[0], 0, imgTxt)
         }
+    }
+
+    const enviaObJImg = (chave, objImagens, msg) => {
+        // Defina as informações do repositório e do arquivo
+        const owner = 'Greisonboff'; // Substitua pelo nome do proprietário do repositório
+        const repo = 'data-center'; // Substitua pelo nome do repositório
+        const pathToFile = 'objImagens.json'; // Substitua pelo caminho para o arquivo JSON
+        const token = chave; // Substitua pelo seu token de acesso pessoal
+
+        // Construa a URL da API do GitHub
+        const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${pathToFile}`;
+
+        const headers = {
+            'Authorization': `token ${token}`,
+            'Content-Type': 'application/json;charset=UTF-8',// Exemplo de cabeçalho de tipo de conteúdo
+            // Outros cabeçalhos personalizados, se necessário
+        };
+
+        // Objeto de configuração da requisição
+        const config = {
+            headers: headers,
+            // Outras opções de configuração, como method, data, params, etc.
+        };
+
+        axios.get(apiUrl, config)
+            .then((response) => {
+                const currentContent = JSON.parse(decodeURIComponent(escape(atob(response.data.content))));
+               
+                objImagens.map((e)=>{
+                    currentContent.unshift(e);
+                })
+                
+                // Construa os dados para a atualização
+                const newData = {
+                    message: msg,
+                    content: btoa(unescape(encodeURIComponent(JSON.stringify(currentContent)))),
+                    sha: response.data.sha // Inclua o SHA atual do arquivo
+                };
+
+                // Faça uma solicitação PUT para atualizar o arquivo
+                
+                axios.put(apiUrl, JSON.stringify(newData), { headers })
+                    .then((response) => {
+                        setLoad()
+                        setRetorno('Projeto cadastrado com sucesso!')
+                        localStorage.setItem('chave_de_acesso_github', token);
+                    })
+                    .catch((error) => {
+                        setLoad()
+                        setRetorno('Erro tente novamente!')
+                        console.error('Erro:', error);
+                    });
+                    
+            })
+            .catch((error) => {
+                setLoad()
+                setRetorno('Erro tente novamente!')
+                console.error('Erro:', error);
+            });
     }
 
     const salvarInfoProjeto = () => {
