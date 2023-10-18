@@ -89,7 +89,7 @@ export default function FormProject({ dataChave }) {
 
     return (
         <>
-            <form onSubmit={salvarInfoProjeto} className="shadow-black dark:shadow-white shadow flex flex-col lg:h-[120%] lg:w-1/2 sm:w-1/2 w-auto bg-transparent p-5 rounded-lg m-2 lg:m-5">
+            <form onSubmit={salvarInfoProjeto} className="shadow-black dark:shadow-white shadow flex flex-col lg:h-[140%] lg:w-1/2 sm:w-1/2 w-auto bg-transparent p-5 rounded-lg m-2 lg:m-5">
                 <TituloForm titulo={'Cadastrar novo projeto'} />
                 <InputElement valor={nome} aoAlterado={valor => setNome(valor)} type='text' placeholder='Nome do projeto' />
                 <InputElement valor={link} aoAlterado={valor => setLink(valor)} type='text' placeholder='Link do projeto' />
