@@ -23,7 +23,7 @@ export default function Form({ dataChave }) {
     const token = chave; // Substitua pelo seu token de acesso pessoal
 
     // Construa a URL da API do GitHub
-    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${pathToFile}`;
+    const apiUrl = `${import.meta.env.VITE_API_URL_BASE}${pathToFile}`;
 
     const headers = {
       Authorization: `token ${token}`,
