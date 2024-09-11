@@ -5,6 +5,7 @@ import TituloForm from "../titleFrom/TituloFrom";
 import axios from "axios";
 import Loader from "../../load/Loader";
 import Status from "../../status/Status";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Form({ dataChave }) {
   const [categoria, setCategoria] = useState("");
@@ -17,10 +18,9 @@ export default function Form({ dataChave }) {
 
   const envia = (categoria, link, nome, msg, chave) => {
     // Defina as informações do repositório e do arquivo
-    const owner = "Greisonboff"; // Substitua pelo nome do proprietário do repositório
-    const repo = "data-center"; // Substitua pelo nome do repositório
     const pathToFile = "certificate.json"; // Substitua pelo caminho para o arquivo JSON
     const token = chave; // Substitua pelo seu token de acesso pessoal
+    const uniqueKey = uuidv4();
 
     // Construa a URL da API do GitHub
     const apiUrl = `${import.meta.env.VITE_API_URL_BASE}${pathToFile}`;
@@ -45,7 +45,12 @@ export default function Form({ dataChave }) {
         );
 
         // Modifique o conteúdo do arquivo conforme necessário
-        var dataAdd = { categoria: categoria, link: link, nome_curso: nome };
+        var dataAdd = {
+          categoria: categoria,
+          link: link,
+          nome_curso: nome,
+          key: uniqueKey,
+        };
         currentContent.unshift(dataAdd);
 
         // Construa os dados para a atualização

@@ -1,15 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Botao_navegacao from "../botaoNavegacao/BotaoNavegacao";
 import axios from "axios";
 import InputElement from "../inputs/InputElement";
 import Li from "../componentList/Li";
 import Erro from "../erro/Erro";
+import { useStore } from "../../store/useStore";
+import ModalEdit from "../Modal";
 
 export default function Listas({ dataChave }) {
   const [textoCertificados, setTextoCertificados] = useState([]);
   const [textoProjetos, setTextoProjetos] = useState([]);
   const [chave, setChave] = useState(dataChave());
   const [erro, setErro] = useState("");
+
+  const { setEditItemModal, setListType } = useStore();
 
   const pega = (chave, ativador) => {
     // Defina as informações do repositório e do arquivo
@@ -66,6 +70,11 @@ export default function Listas({ dataChave }) {
     }, 3000);
   };
 
+  const editar = (item, listType) => {
+    setEditItemModal(item);
+    setListType(listType);
+  };
+
   return (
     <div className="flex flex-col w-full sm:w-3/5 lg:w-3/5 px-8">
       <div>
@@ -90,6 +99,10 @@ export default function Listas({ dataChave }) {
               <Li param="Categoria: " item={item.categoria} />
               <Li param="Nome do curso: " item={item.nome_curso} />
               <Li param="Link: " item={item.link} />
+              <Botao_navegacao
+                funcao={() => editar(item, "certificate")}
+                text="Editar"
+              />
             </ul>
             <hr />
           </div>
@@ -102,11 +115,16 @@ export default function Listas({ dataChave }) {
               <Li param="Descrição:" item={item.descricao} />
               <Li param="Link da imagem:" item={item.caminho_imagem} />
               <Li param="Link do projeto:" item={item.link} />
+              <Botao_navegacao
+                funcao={() => editar(item, "projetos")}
+                text="Editar"
+              />
             </ul>
             <hr />
           </div>
         ))}
       </div>
+      <ModalEdit />
     </div>
   );
 }
