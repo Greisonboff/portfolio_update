@@ -6,6 +6,7 @@ import axios from "axios";
 import Texto from "../texto/Texto";
 import Loader from "../../load/Loader";
 import Status from "../../status/Status";
+import { v4 as uuidv4 } from "uuid";
 
 export default function FormProject({ dataChave }) {
   const [descricao, setDescricao] = useState("");
@@ -22,6 +23,7 @@ export default function FormProject({ dataChave }) {
     // Defina as informações do repositório e do arquivo
     const pathToFile = "projetos.json"; // Substitua pelo caminho para o arquivo JSON
     const token = chave; // Substitua pelo seu token de acesso pessoal
+    const uniqueKey = uuidv4();
 
     // Construa a URL da API do GitHub
     const apiUrl = `${import.meta.env.VITE_API_URL_BASE}${pathToFile}`;
@@ -52,6 +54,7 @@ export default function FormProject({ dataChave }) {
           link: link,
           link_git: linkGit,
           caminho_imagem: img,
+          key: uniqueKey,
         };
         currentContent.unshift(dataAdd);
 
