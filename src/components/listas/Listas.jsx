@@ -2,64 +2,60 @@ import { useState } from "react";
 import Botao_navegacao from "../botaoNavegacao/BotaoNavegacao";
 import axios from "axios";
 import InputElement from "../inputs/InputElement";
-import Li from "../componentList/Li";
 import Erro from "../erro/Erro";
 import { useStore } from "../../store/useStore";
 import ModalEdit from "../Modal";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Listas({ dataChave }) {
-  const [textoCertificados, setTextoCertificados] = useState([]);
-  const [textoProjetos, setTextoProjetos] = useState([]);
   const [chave, setChave] = useState(dataChave());
   const [erro, setErro] = useState("");
+  const [isQueryEnabled, setIsQueryEnabled] = useState(false);
+  const [ativador, setAtivador] = useState("");
 
   const { setEditItemModal, setListType } = useStore();
 
-  const pega = (chave, ativador) => {
-    // Defina as informações do repositório e do arquivo
+  const fetchData = async (chave, ativador) => {
     const pathToFile =
-      ativador === "Listar certificados" ? `certificate.json` : "projetos.json"; // Substitua pelo caminho para o arquivo JSON
-    const token = chave; // Substitua pelo seu token de acesso pessoal
+      ativador === "Listar certificados" ? `certificate.json` : "projetos.json";
+    const token = chave;
 
-    // Construa a URL da API do GitHub
     const apiUrl = `${import.meta.env.VITE_API_URL_BASE}${pathToFile}`;
     const headers = {
       Authorization: `token ${token}`,
-      "Content-Type": "application/json;charset=UTF-8", // Exemplo de cabeçalho de tipo de conteúdo
-      // Outros cabeçalhos personalizados, se necessário
+      "Content-Type": "application/json;charset=UTF-8",
     };
 
-    // Objeto de configuração da requisição
     const config = {
       headers: headers,
-      // Outras opções de configuração, como method, data, params, etc.
     };
 
-    axios
-      .get(apiUrl, config)
-      .then((response) => {
-        const currentContent = JSON.parse(
-          decodeURIComponent(escape(atob(response.data.content)))
-        );
-        if (ativador === "Listar certificados") {
-          setTextoProjetos([]);
-          setTextoCertificados(currentContent);
-        } else {
-          setTextoCertificados([]);
-          setTextoProjetos(currentContent);
-        }
-        localStorage.setItem("chave_de_acesso_github", token);
-      })
-      .catch((error) => {
-        console.error("Erro:", error);
-        setTextoCertificados([]);
-        setTextoProjetos([]);
-        ativaErro("Erro ao buscar os dados");
-      });
+    const response = await axios.get(apiUrl, config);
+    const currentContent = JSON.parse(
+      decodeURIComponent(escape(atob(response.data.content)))
+    );
+    console.log("currentContent: ", currentContent);
+    return currentContent;
   };
 
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["getListings", chave, ativador],
+    queryFn: () => fetchData(chave, ativador),
+
+    enabled: isQueryEnabled,
+    onSuccess: (data) => {
+      console.log("data in q: ", data);
+      localStorage.setItem("chave_de_acesso_github", chave);
+    },
+    onError: () => {
+      ativaErro("Erro ao buscar os dados");
+    },
+  });
+  console.log("data is: ", data);
+
   const ativaPega = () => {
-    pega(chave, event.target.innerText);
+    setAtivador(event.target.innerText);
+    setIsQueryEnabled(true);
   };
 
   const ativaErro = (e) => {
@@ -70,9 +66,11 @@ export default function Listas({ dataChave }) {
     }, 3000);
   };
 
-  const editar = (item, listType) => {
+  const editar = (item) => {
     setEditItemModal(item);
-    setListType(listType);
+    setListType(
+      ativador === "Listar certificados" ? "certificate" : "projetos"
+    );
   };
 
   return (
@@ -93,32 +91,23 @@ export default function Listas({ dataChave }) {
       </div>
       <Erro texto={erro} />
       <div className="break-all">
-        {textoCertificados.map((item, index) => (
+        {data?.map((item, index) => (
           <div key={index}>
             <ul className="flex flex-col m-1 ">
-              <Li param="Categoria: " item={item.categoria} />
-              <Li param="Nome do curso: " item={item.nome_curso} />
-              <Li param="Link: " item={item.link} />
-              <Botao_navegacao
-                funcao={() => editar(item, "certificate")}
-                text="Editar"
+              <CustomList label="Projeto:" description={item?.nome_projeto} />
+              <CustomList label="Descrição:" description={item?.descricao} />
+              <CustomList
+                label="Link da imagem:"
+                description={item?.caminho_imagem}
               />
-            </ul>
-            <hr />
-          </div>
-        ))}
+              <CustomList label="Categoria:" description={item?.categoria} />
+              <CustomList
+                label="Nome do curso:"
+                description={item?.nome_curso}
+              />
+              <CustomList label="Link:" description={item?.link} />
 
-        {textoProjetos.map((item, index) => (
-          <div key={index}>
-            <ul className="flex flex-col m-1 ">
-              <Li param="Projeto:" item={item.nome_projeto} />
-              <Li param="Descrição:" item={item.descricao} />
-              <Li param="Link da imagem:" item={item.caminho_imagem} />
-              <Li param="Link do projeto:" item={item.link} />
-              <Botao_navegacao
-                funcao={() => editar(item, "projetos")}
-                text="Editar"
-              />
+              <Botao_navegacao funcao={() => editar(item)} text="Editar" />
             </ul>
             <hr />
           </div>
@@ -126,5 +115,17 @@ export default function Listas({ dataChave }) {
       </div>
       <ModalEdit />
     </div>
+  );
+}
+
+function CustomList({ label, description }) {
+  if (!label || !description) {
+    return null;
+  }
+  return (
+    <li className=" dark:text-gray-300 text-gray-500 ">
+      {label} &nbsp;{" "}
+      <span className=" dark:text-white text-slate-950">{description}</span>
+    </li>
   );
 }
