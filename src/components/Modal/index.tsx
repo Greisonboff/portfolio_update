@@ -6,6 +6,7 @@ import Sheet from "@mui/joy/Sheet";
 import { useStore } from "../../store/useStore";
 import { Button, FormLabel, Input, Textarea } from "@mui/joy";
 import { updateProject } from "./utils";
+import { queryClient } from "../../main";
 
 export default function ModalEdit() {
   const { setEditItemModal, item, listType } = useStore();
@@ -27,9 +28,8 @@ export default function ModalEdit() {
     const response = await updateProject(obj, listType);
 
     setLoad(false);
-    setTimeout(() => {
-      setEditItemModal(null);
-    }, 300);
+    setEditItemModal(null);
+    queryClient.invalidateQueries({ queryKey: ["getListings"] });
   };
 
   return (

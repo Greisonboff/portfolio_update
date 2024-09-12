@@ -58,6 +58,7 @@ export async function updateProject(data, listType) {
     // Solicitação PUT para atualizar o arquivo
     await axios.put(apiUrl, JSON.stringify(newData), { headers });
     console.log("dados atualizados");
+
     return true;
   } catch (error) {
     console.error("Erro:", error);
