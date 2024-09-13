@@ -9,13 +9,12 @@ import { updateProject } from "./utils";
 import { queryClient } from "../../main";
 
 export default function ModalEdit() {
-  const { setEditItemModal, item, listType } = useStore();
+  const { setEditItemModal, item, listType, setOpenFeedBack } = useStore();
   const [load, setLoad] = React.useState<boolean>(false);
 
   const handleSubmit = async (e) => {
     setLoad(true);
-    e.preventDefault(); // Impede o comportamento padrão de recarregar a página
-    console.log("Form submitted:", e.target.elements);
+    e.preventDefault();
     var data: { name: string; value: string }[] = Array.from(e.target.elements);
 
     const obj = data.reduce<{ [key: string]: string }>((acc, item) => {
@@ -24,12 +23,15 @@ export default function ModalEdit() {
       }
       return acc;
     }, {});
-
     const response = await updateProject(obj, listType);
 
+    setOpenFeedBack({ isOpen: true, successStatus: response });
     setLoad(false);
     setEditItemModal(null);
-    queryClient.invalidateQueries({ queryKey: ["getListings"] });
+
+    if (response) {
+      queryClient.invalidateQueries({ queryKey: ["getListings"] });
+    }
   };
 
   return (
