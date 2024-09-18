@@ -51,9 +51,13 @@ export default function ModalEdit() {
           p: 3,
           boxShadow: "lg",
         }}
+        className="bg-white dark:bg-[#1c1c1c]"
       >
         <ModalClose variant="plain" sx={{ m: 1 }} />
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={handleSubmit}
+          className="dark:text-white text-slate-950"
+        >
           <Typography
             component="h2"
             id="modal-title"
@@ -107,6 +111,7 @@ export default function ModalEdit() {
             type="submit"
             variant="outlined"
             loading={load}
+            className="dark:text-white dark:hover:text-slate-950"
           >
             Salvar alterações
           </Button>
@@ -146,7 +151,7 @@ function CustomInput({
   }
   return (
     <div className={`p-1 ${hidden && "hidden"}`}>
-      <FormLabel>{label}</FormLabel>
+      <FormLabel className="dark:text-white text-slate-950">{label}</FormLabel>
       {type ? (
         <Textarea
           name={field}
@@ -154,6 +159,7 @@ function CustomInput({
           maxRows={5}
           size="sm"
           placeholder={placeholder}
+          className="dark:bg-zinc-700 dark:placeholder-slate-200 dark:text-white"
         />
       ) : (
         <Input
@@ -161,6 +167,7 @@ function CustomInput({
           size="sm"
           placeholder={placeholder}
           value={value && value}
+          className="dark:bg-zinc-700 dark:placeholder-slate-200 dark:text-white"
         />
       )}
     </div>
