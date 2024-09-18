@@ -3,7 +3,7 @@ import Botao_navegacao from "../botaoNavegacao/BotaoNavegacao";
 import axios from "axios";
 import InputElement from "../inputs/InputElement";
 import Erro from "../erro/Erro";
-import { useStore } from "../../store/useStore";
+import { useGlobalStore } from "../../store/useGlobalStore";
 import ModalEdit from "../Modal";
 import { useQuery } from "@tanstack/react-query";
 
@@ -13,7 +13,7 @@ export default function Listas({ dataChave }) {
   const [isQueryEnabled, setIsQueryEnabled] = useState(false);
   const [ativador, setAtivador] = useState("");
 
-  const { setEditItemModal, setListType } = useStore();
+  const { setEditItemModal, setListType } = useGlobalStore();
 
   const fetchData = async (chave, ativador) => {
     const pathToFile =

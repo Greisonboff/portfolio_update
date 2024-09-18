@@ -4,8 +4,8 @@ import InputElement from "../inputs/InputElement";
 import TituloForm from "../titleFrom/TituloFrom";
 import axios from "axios";
 import Loader from "../../load/Loader";
-import Status from "../../status/Status";
 import { v4 as uuidv4 } from "uuid";
+import { useGlobalStore } from "../../store/useGlobalStore";
 
 export default function Form({ dataChave }) {
   const [categoria, setCategoria] = useState("");
@@ -14,7 +14,7 @@ export default function Form({ dataChave }) {
   const [chave, setChave] = useState(dataChave());
   const [msg, setMsg] = useState("");
   const [load, setLoad] = useState("");
-  const [retorno, setRetorno] = useState("");
+  const { setOpenFeedBack } = useGlobalStore();
 
   const envia = (categoria, link, nome, msg, chave) => {
     // Defina as informações do repositório e do arquivo
@@ -65,20 +65,30 @@ export default function Form({ dataChave }) {
         // Faça uma solicitação PUT para atualizar o arquivo
         axios
           .put(apiUrl, JSON.stringify(newData), { headers })
-          .then((response) => {
+          .then(() => {
             setLoad();
-            setRetorno("Certificado cadastrado com sucesso!");
+            setOpenFeedBack({
+              isOpen: true,
+              message: "Certificado cadastrado com sucesso!",
+              successStatus: true,
+            });
             localStorage.setItem("chave_de_acesso_github", token);
           })
           .catch((error) => {
             setLoad();
-            setRetorno("Erro tente novamente!");
+            setOpenFeedBack({
+              isOpen: true,
+              successStatus: false,
+            });
             console.error("Erro:", error);
           });
       })
       .catch((error) => {
         setLoad();
-        setRetorno("Erro tente novamente!");
+        setOpenFeedBack({
+          isOpen: true,
+          successStatus: false,
+        });
         console.error("Erro:", error);
       });
   };
@@ -91,7 +101,6 @@ export default function Form({ dataChave }) {
     setLink("");
     setNome("");
     setMsg("");
-    //setChave('')
   };
 
   return (
@@ -130,20 +139,12 @@ export default function Form({ dataChave }) {
         type="text"
         placeholder="Chave de acesso"
       />
-      {load != true &&
-      retorno == "" &&
-      nome != "" &&
-      link != "" &&
-      msg != "" &&
-      chave != "" ? (
+      {load != true && nome != "" && link != "" && msg != "" && chave != "" ? (
         <Botao texto="Salvar" />
       ) : (
         ""
       )}
-      <div className="flex m-auto">
-        {load == true ? <Loader /> : ""}
-        {retorno != "" ? <Status estado={setRetorno} retorno={retorno} /> : ""}
-      </div>
+      <div className="flex m-auto">{load == true ? <Loader /> : ""}</div>
     </form>
   );
 }
