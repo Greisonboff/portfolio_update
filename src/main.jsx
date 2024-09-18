@@ -10,6 +10,7 @@ import Header from "./components/header/Header";
 import Home from "./components/home/Home";
 import UpImg from "./components/uploadImg/formUploadImg";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import FeedBack from "./components/FeedBack";
 
 // Create a client
 export const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/listas" element={<Box element={[Listas]} />} />
           <Route path="/up-img" element={<Box element={[UpImg]} />} />
         </Routes>
+        <FeedBack />
       </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>

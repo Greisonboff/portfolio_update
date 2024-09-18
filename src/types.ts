@@ -3,6 +3,8 @@ export interface StoreState {
   setEditItemModal: (item: ItemType | null) => void;
   listType: "projetos" | "certificate" | null;
   setListType: (listType: "projetos" | "certificate" | null) => void;
+  openFeedBack: FeedBackProp;
+  setOpenFeedBack: (openFeedBack: FeedBackProp) => void;
 }
 
 export interface ItemType {
@@ -14,4 +16,10 @@ export interface ItemType {
   categoria?: string;
   key?: string;
   nome_curso?: string;
+}
+
+interface FeedBackProp {
+  successStatus?: boolean;
+  isOpen: boolean;
+  message?: string;
 }
