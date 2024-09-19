@@ -4,8 +4,11 @@ import axios from "axios";
 import InputElement from "../inputs/InputElement";
 import Erro from "../erro/Erro";
 import { useGlobalStore } from "../../store/useGlobalStore";
-import ModalEdit from "../Modal";
+import ModalEdit from "./components/ModalEditar";
 import { useQuery } from "@tanstack/react-query";
+import { deletData } from "./services/deletData";
+import ModalExcluir from "./components/ModalExcluir";
+import { queryClient } from "../../main";
 
 export default function Listas({ dataChave }) {
   const [chave, setChave] = useState(dataChave());
@@ -13,7 +16,7 @@ export default function Listas({ dataChave }) {
   const [isQueryEnabled, setIsQueryEnabled] = useState(false);
   const [ativador, setAtivador] = useState("");
 
-  const { setEditItemModal, setListType } = useGlobalStore();
+  const { setEditItemModal, setListType, setOpenDeletModal } = useGlobalStore();
 
   const fetchData = async (chave, ativador) => {
     const pathToFile =
@@ -73,6 +76,21 @@ export default function Listas({ dataChave }) {
     );
   };
 
+  const excluir = (item) => {
+    console.log("item para excluir: ", item.key);
+    const listType =
+      ativador === "Listar certificados" ? "certificate" : "projetos";
+    setOpenDeletModal({
+      isOpen: true,
+      calback: async () => {
+        await deletData(item.key, listType, () => {
+          queryClient.invalidateQueries({ queryKey: ["getListings"] });
+          setOpenDeletModal({ isOpen: false, calback: () => {} });
+        });
+      },
+    });
+  };
+
   return (
     <div className="flex flex-col w-full sm:w-3/5 lg:w-3/5 px-8">
       <div>
@@ -93,7 +111,7 @@ export default function Listas({ dataChave }) {
       <div className="break-all">
         {data?.map((item, index) => (
           <div key={index}>
-            <ul className="flex flex-col m-1 ">
+            <ul className="flex flex-col m-1 pt-2">
               <CustomList label="Projeto:" description={item?.nome_projeto} />
               <CustomList label="Descrição:" description={item?.descricao} />
               <CustomList
@@ -106,14 +124,25 @@ export default function Listas({ dataChave }) {
                 description={item?.nome_curso}
               />
               <CustomList label="Link:" description={item?.link} />
-
-              <Botao_navegacao funcao={() => editar(item)} text="Editar" />
+              <div className="w-full flex p-3 gap-3">
+                <Botao_navegacao
+                  className="w-[50%]"
+                  funcao={() => excluir(item)}
+                  text="Excluir"
+                />
+                <Botao_navegacao
+                  className="w-[50%]"
+                  funcao={() => editar(item)}
+                  text="Editar"
+                />
+              </div>
             </ul>
             <hr />
           </div>
         ))}
       </div>
       <ModalEdit />
+      <ModalExcluir />
     </div>
   );
 }

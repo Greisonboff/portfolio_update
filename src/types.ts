@@ -5,6 +5,8 @@ export interface StoreState {
   setListType: (listType: "projetos" | "certificate" | null) => void;
   openFeedBack: FeedBackProp;
   setOpenFeedBack: (openFeedBack: FeedBackProp) => void;
+  openDeletModal: DeletModal;
+  setOpenDeletModal: (openDeletModal: DeletModal) => void;
 }
 
 export interface ItemType {
@@ -22,4 +24,9 @@ interface FeedBackProp {
   successStatus?: boolean;
   isOpen: boolean;
   message?: string;
+}
+
+interface DeletModal {
+  isOpen: boolean;
+  calback: () => void;
 }
