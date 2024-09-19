@@ -3,10 +3,10 @@ import Modal from "@mui/joy/Modal";
 import ModalClose from "@mui/joy/ModalClose";
 import Typography from "@mui/joy/Typography";
 import Sheet from "@mui/joy/Sheet";
-import { useGlobalStore } from "../../store/useGlobalStore";
+import { useGlobalStore } from "../../../../store/useGlobalStore";
 import { Button, FormLabel, Input, Textarea } from "@mui/joy";
-import { updateProject } from "./utils";
-import { queryClient } from "../../main";
+import { updateData } from "../../services/updateData";
+import { queryClient } from "../../../../main";
 
 export default function ModalEdit() {
   const { setEditItemModal, item, listType, setOpenFeedBack } =
@@ -24,7 +24,7 @@ export default function ModalEdit() {
       }
       return acc;
     }, {});
-    const response = await updateProject(obj, listType);
+    const response = await updateData(obj, listType);
 
     setOpenFeedBack({ isOpen: true, successStatus: response });
     setLoad(false);

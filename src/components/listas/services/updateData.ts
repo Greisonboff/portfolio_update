@@ -1,6 +1,7 @@
 import axios from "axios";
 
-export async function updateProject(data, listType) {
+// atualiza dados de projetos e certificados
+export async function updateData(data, listType, onSucess) {
   try {
     // Defina as informações do repositório e do arquivo
     const pathToFile = `${listType}.json`; // Substitua pelo caminho para o arquivo JSON
@@ -58,6 +59,8 @@ export async function updateProject(data, listType) {
     // Solicitação PUT para atualizar o arquivo
     await axios.put(apiUrl, JSON.stringify(newData), { headers });
     console.log("dados atualizados");
+
+    onSucess?.();
 
     return true;
   } catch (error) {

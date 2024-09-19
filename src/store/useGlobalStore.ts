@@ -9,4 +9,7 @@ export const useGlobalStore = create<StoreState>((set) => ({
   openFeedBack: { isOpen: false, successStatus: true },
   setOpenFeedBack: (newOpenFeedBack) =>
     set(() => ({ openFeedBack: newOpenFeedBack })),
+  openDeletModal: { isOpen: false, calback: () => {} },
+  setOpenDeletModal: (newOpenDeletModal) =>
+    set(() => ({ openDeletModal: newOpenDeletModal })),
 }));
