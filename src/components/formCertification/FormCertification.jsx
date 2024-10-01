@@ -5,7 +5,7 @@ import axios from "axios";
 import Loader from "../../load/Loader";
 import { v4 as uuidv4 } from "uuid";
 import { useGlobalStore } from "../../store/useGlobalStore";
-import Botao from "../CustomBotao";
+import Botao from "../components/CustomBotao";
 
 export default function Form({ dataChave }) {
   const [categoria, setCategoria] = useState("");
