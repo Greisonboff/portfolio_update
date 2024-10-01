@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Botao from "../CustomBotao";
+import Botao from "../components/BotaoNavegacao";
 import InputElement from "../inputs/InputElement";
 import TituloForm from "../titleFrom/TituloFrom";
 import axios from "axios";
