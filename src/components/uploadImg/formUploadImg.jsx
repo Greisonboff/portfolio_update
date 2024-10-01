@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Botao from "../botao/botao";
+import Botao from "../botao";
 import InputElement from "../inputs/InputElement";
 import TituloForm from "../titleFrom/TituloFrom";
 import axios from "axios";
@@ -167,7 +167,7 @@ export default function UpImg({ dataChave }) {
     <>
       <form
         onSubmit={salvarInfoProjeto}
-        className="shadow-black dark:shadow-white shadow flex flex-col w-full sm:w-2/3 bg-transparent p-5 pb-0 rounded-lg m-2 lg:m-5"
+        className="shadow-black dark:shadow-white shadow flex flex-col w-full sm:w-2/3 bg-transparent p-5 rounded-lg m-2 lg:m-5"
       >
         <TituloForm titulo={"Carregar imagens"} />
         <label className="dark:bg-zinc-800 font-semibold bg-zinc-400 dark:text-slate-300 text-slate-900 m-6 h-16 w-2/3 mx-auto rounded-md flex justify-center items-center">
