@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import Box from "./components/Box";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Listas from "./pages/listas";
+import Listas from "./pages/Lista";
 import Form from "./pages/FormCertification";
 import FormProject from "./pages/FormProject";
 import Header from "./components/Header";
