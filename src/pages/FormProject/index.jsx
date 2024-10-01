@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Botao from "../components/BotaoNavegacao";
-import InputElement from "../inputs/InputElement";
-import TituloForm from "../titleFrom/TituloFrom";
+import Botao from "../../components/CustomBotao";
+import InputElement from "../../components/inputs/InputElement";
+import TituloForm from "../../components/titleFrom/TituloFrom";
 import axios from "axios";
-import Texto from "../texto/Texto";
+import Texto from "../../components/texto/Texto";
 import Loader from "../../load/Loader";
 import Status from "../../status/Status";
 import { v4 as uuidv4 } from "uuid";

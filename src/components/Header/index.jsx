@@ -2,7 +2,7 @@ import Link_header from "./LinkHeader";
 import ToggleTheme from "../toggle/ToggleTheme";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineCloseSquare } from "react-icons/ai";
-import LogoImg from "../../logo/Logo";
+import LogoImg from "../logo/Logo";
 import { useState } from "react";
 
 export default function Header() {

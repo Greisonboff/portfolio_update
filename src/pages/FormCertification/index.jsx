@@ -1,11 +1,11 @@
 import { useState } from "react";
-import InputElement from "../inputs/InputElement";
-import TituloForm from "../titleFrom/TituloFrom";
+import InputElement from "../../components/inputs/InputElement";
+import TituloForm from "../../components/titleFrom/TituloFrom";
 import axios from "axios";
 import Loader from "../../load/Loader";
 import { v4 as uuidv4 } from "uuid";
 import { useGlobalStore } from "../../store/useGlobalStore";
-import Botao from "../components/CustomBotao";
+import Botao from "../../components/CustomBotao";
 
 export default function Form({ dataChave }) {
   const [categoria, setCategoria] = useState("");

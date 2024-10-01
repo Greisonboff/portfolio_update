@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import Box from "./components/components/Box";
+import Box from "./components/Box";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Listas from "./components/listas/Listas";
-import Form from "./components/formCertification/FormCertification";
-import FormProject from "./components/formProject/FormProject";
-import Header from "./components/components/Header";
-import Home from "./components/home/Home";
-import UpImg from "./components/uploadImg/formUploadImg";
+import Listas from "./pages/listas";
+import Form from "./pages/FormCertification";
+import FormProject from "./pages/FormProject";
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import UpImg from "./pages/UploadImg";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import FeedBack from "./components/FeedBack";
 
