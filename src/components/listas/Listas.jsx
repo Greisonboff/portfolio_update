@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Botao_navegacao from "../botaoNavegacao/BotaoNavegacao";
+import BotaoNavegacao from "../BotaoNavegacao";
 import axios from "axios";
 import InputElement from "../inputs/InputElement";
 import Erro from "../erro/Erro";
@@ -94,9 +94,9 @@ export default function Listas({ dataChave }) {
   return (
     <div className="flex flex-col w-full sm:w-3/5 lg:w-3/5 px-8">
       <div>
-        <div className="break-all flex justify-center">
-          <Botao_navegacao funcao={ativaPega} text="Listar certificados" />
-          <Botao_navegacao funcao={ativaPega} text="Listar projetos" />
+        <div className="break-all flex justify-center gap-3">
+          <BotaoNavegacao funcao={ativaPega} text="Listar certificados" />
+          <BotaoNavegacao funcao={ativaPega} text="Listar projetos" />
         </div>
         <div className="break-all flex flex-col justify-center">
           <InputElement
@@ -125,12 +125,12 @@ export default function Listas({ dataChave }) {
               />
               <CustomList label="Link:" description={item?.link} />
               <div className="w-full flex p-3 gap-3">
-                <Botao_navegacao
+                <BotaoNavegacao
                   className="w-[50%]"
                   funcao={() => excluir(item)}
                   text="Excluir"
                 />
-                <Botao_navegacao
+                <BotaoNavegacao
                   className="w-[50%]"
                   funcao={() => editar(item)}
                   text="Editar"
