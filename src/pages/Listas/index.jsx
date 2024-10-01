@@ -1,8 +1,8 @@
 import { useState } from "react";
-import BotaoNavegacao from "../components/BotaoNavegacao";
+import BotaoNavegacao from "../../components/BotaoNavegacao";
 import axios from "axios";
-import InputElement from "../inputs/InputElement";
-import Erro from "../erro/Erro";
+import InputElement from "../../components/inputs/InputElement";
+import Erro from "../../components/erro/Erro";
 import { useGlobalStore } from "../../store/useGlobalStore";
 import ModalEdit from "./components/ModalEditar";
 import { useQuery } from "@tanstack/react-query";

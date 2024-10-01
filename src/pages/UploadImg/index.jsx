@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Botao from "../components/CustomBotao";
-import InputElement from "../inputs/InputElement";
-import TituloForm from "../titleFrom/TituloFrom";
+import Botao from "../../components/CustomBotao";
+import InputElement from "../../components/inputs/InputElement";
+import TituloForm from "../../components/titleFrom/TituloFrom";
 import axios from "axios";
 import Imagem from "./Imagem";
 import Loader from "../../load/Loader";
