@@ -2,6 +2,7 @@ import * as React from "react";
 import { Button, Modal, ModalClose, Typography } from "@mui/joy";
 import Sheet from "@mui/joy/Sheet";
 import { useGlobalStore } from "../../../../store/useGlobalStore";
+import Botao from "../../../../components/Botao";
 
 export default function ModalExcluir() {
   const { openDeletModal, setOpenDeletModal } = useGlobalStore();
@@ -48,27 +49,22 @@ export default function ModalExcluir() {
             Você realmente quer excluir este item?
           </Typography>
           <div className="flex gap-4">
-            <Button
-              sx={{ marginTop: 1, width: "100%" }}
-              type="submit"
-              variant="outlined"
-              className="dark:text-white dark:hover:text-slate-950"
-              onClick={close}
-              disabled={load}
-            >
-              Não
-            </Button>
-            <Button
-              sx={{ marginTop: 1, width: "100%" }}
-              type="submit"
-              variant="outlined"
-              className="dark:text-white dark:hover:text-slate-950"
-              onClick={runClaback}
+            <Botao
+              tipo="submit"
               loading={load}
               disabled={load}
-            >
-              Sim
-            </Button>
+              className="w-full !mt-2"
+              text="Nao"
+              click={close}
+            />
+            <Botao
+              tipo="submit"
+              loading={load}
+              disabled={load}
+              className="w-full !mt-2"
+              text="Sim"
+              click={runClaback}
+            />
           </div>
         </div>
       </Sheet>

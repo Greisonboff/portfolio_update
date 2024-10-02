@@ -1,8 +1,7 @@
 import { useState } from "react";
-import BotaoNavegacao from "../../components/BotaoNavegacao";
+import Botao from "../../components/Botao";
 import axios from "axios";
 import InputElement from "../../components/inputs/InputElement";
-import Erro from "../../components/erro/Erro";
 import { useGlobalStore } from "../../store/useGlobalStore";
 import ModalEdit from "./components/ModalEditar";
 import { useQuery } from "@tanstack/react-query";
@@ -12,36 +11,44 @@ import { queryClient } from "../../main";
 
 export default function Listas({ dataChave }) {
   const [chave, setChave] = useState(dataChave());
-  const [erro, setErro] = useState("");
   const [isQueryEnabled, setIsQueryEnabled] = useState(false);
   const [ativador, setAtivador] = useState("");
 
-  const { setEditItemModal, setListType, setOpenDeletModal } = useGlobalStore();
+  const { setEditItemModal, setListType, setOpenDeletModal, setOpenFeedBack } =
+    useGlobalStore();
 
   const fetchData = async (chave, ativador) => {
-    const pathToFile =
-      ativador === "Listar certificados" ? `certificate.json` : "projetos.json";
-    const token = chave;
+    try {
+      const pathToFile =
+        ativador === "Listar certificados"
+          ? `certificate.json`
+          : "projetos.json";
+      const token = chave;
 
-    const apiUrl = `${import.meta.env.VITE_API_URL_BASE}${pathToFile}`;
-    const headers = {
-      Authorization: `token ${token}`,
-      "Content-Type": "application/json;charset=UTF-8",
-    };
+      const apiUrl = `${import.meta.env.VITE_API_URL_BASE}${pathToFile}`;
+      const headers = {
+        Authorization: `token ${token}`,
+        "Content-Type": "application/json;charset=UTF-8",
+      };
 
-    const config = {
-      headers: headers,
-    };
+      const config = {
+        headers: headers,
+      };
 
-    const response = await axios.get(apiUrl, config);
-    const currentContent = JSON.parse(
-      decodeURIComponent(escape(atob(response.data.content)))
-    );
-    console.log("currentContent: ", currentContent);
-    return currentContent;
+      const response = await axios.get(apiUrl, config);
+
+      console.log("re: ", response);
+      const currentContent = JSON.parse(
+        decodeURIComponent(escape(atob(response.data.content)))
+      );
+      console.log("currentContent: ", currentContent);
+      return currentContent;
+    } catch (error) {
+      throw new Error(`Erro: ${error.message}`);
+    }
   };
 
-  const { data, error, isLoading } = useQuery({
+  const { data, isError, isLoading } = useQuery({
     queryKey: ["getListings", chave, ativador],
     queryFn: () => fetchData(chave, ativador),
 
@@ -51,7 +58,11 @@ export default function Listas({ dataChave }) {
       localStorage.setItem("chave_de_acesso_github", chave);
     },
     onError: () => {
-      ativaErro("Erro ao buscar os dados");
+      setOpenFeedBack({
+        isOpen: true,
+        message: "Erro ao buscar os dados",
+        successStatus: false,
+      });
     },
   });
   console.log("data is: ", data);
@@ -59,14 +70,6 @@ export default function Listas({ dataChave }) {
   const ativaPega = () => {
     setAtivador(event.target.innerText);
     setIsQueryEnabled(true);
-  };
-
-  const ativaErro = (e) => {
-    setErro(e);
-
-    setTimeout(() => {
-      setErro("");
-    }, 3000);
   };
 
   const editar = (item) => {
@@ -95,8 +98,18 @@ export default function Listas({ dataChave }) {
     <div className="flex flex-col w-full sm:w-3/5 lg:w-3/5 px-8">
       <div>
         <div className="break-all flex justify-center gap-3">
-          <BotaoNavegacao funcao={ativaPega} text="Listar certificados" />
-          <BotaoNavegacao funcao={ativaPega} text="Listar projetos" />
+          <Botao
+            loading={isLoading}
+            disabled={isLoading}
+            click={ativaPega}
+            text="Listar certificados"
+          />
+          <Botao
+            loading={isLoading}
+            disabled={isLoading}
+            click={ativaPega}
+            text="Listar projetos"
+          />
         </div>
         <div className="break-all flex flex-col justify-center">
           <InputElement
@@ -107,7 +120,6 @@ export default function Listas({ dataChave }) {
           />
         </div>
       </div>
-      <Erro texto={erro} />
       <div className="break-all">
         {data?.map((item, index) => (
           <div key={index}>
@@ -125,15 +137,17 @@ export default function Listas({ dataChave }) {
               />
               <CustomList label="Link:" description={item?.link} />
               <div className="w-full flex p-3 gap-3">
-                <BotaoNavegacao
+                <Botao
                   className="w-[50%]"
-                  funcao={() => excluir(item)}
+                  click={() => excluir(item)}
                   text="Excluir"
+                  disabled={isLoading}
                 />
-                <BotaoNavegacao
+                <Botao
                   className="w-[50%]"
-                  funcao={() => editar(item)}
+                  click={() => editar(item)}
                   text="Editar"
+                  disabled={isLoading}
                 />
               </div>
             </ul>
