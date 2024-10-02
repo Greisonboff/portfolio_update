@@ -1,4 +1,5 @@
 import { Button } from "@mui/joy";
+import React from "react";
 
 export default function Botao({ texto }) {
   return (
