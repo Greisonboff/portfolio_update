@@ -5,7 +5,7 @@ import axios from "axios";
 import Loader from "../../load/Loader";
 import { v4 as uuidv4 } from "uuid";
 import { useGlobalStore } from "../../store/useGlobalStore";
-import Botao from "../../components/CustomBotao";
+import Botao from "../../components/Botao";
 
 export default function Form({ dataChave }) {
   const [categoria, setCategoria] = useState("");
@@ -139,11 +139,13 @@ export default function Form({ dataChave }) {
         type="text"
         placeholder="Chave de acesso"
       />
+      <div className="pt-4">
       {load != true && nome != "" && link != "" && msg != "" && chave != "" ? (
-        <Botao texto="Salvar" />
+        <Botao text="Salvar" className="w-full" tipo="submit" />
       ) : (
         ""
       )}
+      </div>
       <div className="flex m-auto">{load == true ? <Loader /> : ""}</div>
     </form>
   );

@@ -6,13 +6,15 @@ import LogoImg from "../logo/Logo";
 import { useState } from "react";
 
 export default function Header() {
-  const [iconMenu, setIconMenu] = useState("");
+  const [iconMenu, setIconMenu] = useState(false);
+
   const ativaMenu = () => {
     const element = document.querySelector(".menu-links").classList;
     element.toggle("hidden");
     element.toggle("flex");
-    iconMenu == "" ? setIconMenu(true) : setIconMenu("");
+    iconMenu == false ? setIconMenu(true) : setIconMenu(false);
   };
+
   return (
     <div className="flex justify-between sm:justify-center align-baseline my-4 h-8 border-b-2 dark:border-slate-200 border-slate-800 pb-10">
       <div className="mx-6 sm:mx-3 h-8 relative sm:hidden">

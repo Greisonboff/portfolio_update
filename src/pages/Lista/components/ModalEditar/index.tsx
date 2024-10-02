@@ -7,6 +7,7 @@ import { useGlobalStore } from "../../../../store/useGlobalStore";
 import { Button, FormLabel, Input, Textarea } from "@mui/joy";
 import { updateData } from "../../services/updateData";
 import { queryClient } from "../../../../main";
+import Botao from "../../../../components/Botao";
 
 export default function ModalEdit() {
   const { setEditItemModal, item, listType, setOpenFeedBack } =
@@ -106,15 +107,12 @@ export default function ModalEdit() {
             placeholder={item?.key}
             value={item?.key}
           />
-          <Button
-            sx={{ marginTop: 1, width: "100%" }}
-            type="submit"
-            variant="outlined"
+          <Botao
+            tipo="submit"
             loading={load}
-            className="dark:text-white dark:hover:text-slate-950"
-          >
-            Salvar alterações
-          </Button>
+            className="w-full !mt-2"
+            text="Salvar alterações"
+          />
         </form>
       </Sheet>
     </Modal>

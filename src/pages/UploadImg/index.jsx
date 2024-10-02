@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Botao from "../../components/CustomBotao";
+import Botao from "../../components/Botao";
 import InputElement from "../../components/inputs/InputElement";
 import TituloForm from "../../components/titleFrom/TituloFrom";
 import axios from "axios";
@@ -200,7 +200,9 @@ export default function UpImg({ dataChave }) {
               type="text"
               placeholder="Chave de acesso"
             />
-            <Botao texto="Salvar" />
+            <div className="pt-4">
+              <Botao className="w-full" text="Salvar" />
+            </div>
           </>
         ) : (
           ""

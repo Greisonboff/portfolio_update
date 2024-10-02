@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Botao from "../../components/CustomBotao";
+import Botao from "../../components/Botao";
 import InputElement from "../../components/inputs/InputElement";
 import TituloForm from "../../components/titleFrom/TituloFrom";
 import axios from "axios";
@@ -157,6 +157,7 @@ export default function FormProject({ dataChave }) {
           type="text"
           placeholder="Chave de acesso"
         />
+        <div className="pt-4">
         {load != true &&
         retorno == "" &&
         nome != "" &&
@@ -165,10 +166,11 @@ export default function FormProject({ dataChave }) {
         img != "" &&
         msg != "" &&
         chave != "" ? (
-          <Botao texto="Salvar" />
+          <Botao text="Salvar" className="w-full" tipo="submit" />
         ) : (
           ""
         )}
+        </div>
         <div className="flex m-auto">
           {load == true ? <Loader /> : ""}
           {retorno != "" ? (
