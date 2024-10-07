@@ -7,6 +7,8 @@ export interface StoreState {
   setOpenFeedBack: (openFeedBack: FeedBackProp) => void;
   openDeletModal: DeletModal;
   setOpenDeletModal: (openDeletModal: DeletModal) => void;
+  chave: string;
+  setChave: (chave: string) => void;
 }
 
 export interface ItemType {

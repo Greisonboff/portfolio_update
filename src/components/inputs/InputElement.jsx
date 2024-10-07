@@ -1,8 +1,14 @@
 import TituloInput from "../titleInput/TituloInput";
 
-export default function InputElement({ type, placeholder, aoAlterado, valor }) {
+export default function InputElement({
+  type = "text",
+  placeholder,
+  aoAlterado,
+  valor,
+  name,
+}) {
   const aoDigitado = (event) => {
-    aoAlterado(event.target.value);
+    aoAlterado?.(event.target.value);
   };
 
   return (
@@ -15,6 +21,7 @@ export default function InputElement({ type, placeholder, aoAlterado, valor }) {
         value={valor}
         required
         placeholder={placeholder}
+        name={name}
       ></input>
     </>
   );

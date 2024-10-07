@@ -8,12 +8,12 @@ import Loader from "../../load/Loader";
 import Status from "../../status/Status";
 import { v4 as uuidv4 } from "uuid";
 
-export default function FormProject({ dataChave }) {
+export default function FormProject() {
   const [descricao, setDescricao] = useState("");
   const [link, setLink] = useState("");
   const [linkGit, setLinkGit] = useState("");
   const [nome, setNome] = useState("");
-  const [chave, setChave] = useState(dataChave());
+  const [chave, setChave] = useState("");
   const [msg, setMsg] = useState("");
   const [img, setImg] = useState("");
   const [load, setLoad] = useState("");
@@ -158,18 +158,18 @@ export default function FormProject({ dataChave }) {
           placeholder="Chave de acesso"
         />
         <div className="pt-4">
-        {load != true &&
-        retorno == "" &&
-        nome != "" &&
-        link != "" &&
-        descricao != "" &&
-        img != "" &&
-        msg != "" &&
-        chave != "" ? (
-          <Botao text="Salvar" className="w-full" tipo="submit" />
-        ) : (
-          ""
-        )}
+          {load != true &&
+          retorno == "" &&
+          nome != "" &&
+          link != "" &&
+          descricao != "" &&
+          img != "" &&
+          msg != "" &&
+          chave != "" ? (
+            <Botao text="Salvar" className="w-full" tipo="submit" />
+          ) : (
+            ""
+          )}
         </div>
         <div className="flex m-auto">
           {load == true ? <Loader /> : ""}

@@ -12,4 +12,6 @@ export const useGlobalStore = create<StoreState>((set) => ({
   openDeletModal: { isOpen: false, calback: () => {} },
   setOpenDeletModal: (newOpenDeletModal) =>
     set(() => ({ openDeletModal: newOpenDeletModal })),
+  chave: "",
+  setChave: (newChave) => set(() => ({ chave: newChave })),
 }));

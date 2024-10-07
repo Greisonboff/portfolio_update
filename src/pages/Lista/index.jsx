@@ -8,14 +8,20 @@ import { useQuery } from "@tanstack/react-query";
 import { deletData } from "./services/deletData";
 import ModalExcluir from "./components/ModalExcluir";
 import { queryClient } from "../../main";
+import { setDataKey } from "../../../utils/setKeyGit";
 
-export default function Listas({ dataChave }) {
-  const [chave, setChave] = useState(dataChave());
+export default function Listas() {
   const [isQueryEnabled, setIsQueryEnabled] = useState(false);
   const [ativador, setAtivador] = useState("");
 
-  const { setEditItemModal, setListType, setOpenDeletModal, setOpenFeedBack } =
-    useGlobalStore();
+  const {
+    chave,
+    setChave,
+    setEditItemModal,
+    setListType,
+    setOpenDeletModal,
+    setOpenFeedBack,
+  } = useGlobalStore();
 
   const fetchData = async (chave, ativador) => {
     try {
@@ -55,7 +61,7 @@ export default function Listas({ dataChave }) {
     enabled: isQueryEnabled,
     onSuccess: (data) => {
       console.log("data in q: ", data);
-      localStorage.setItem("chave_de_acesso_github", chave);
+      setDataKey(chave);
     },
     onError: () => {
       setOpenFeedBack({
@@ -68,7 +74,9 @@ export default function Listas({ dataChave }) {
   console.log("data is: ", data);
 
   const ativaPega = () => {
-    setAtivador(event.target.innerText);
+    event.preventDefault();
+    setChave(event.target[2].value);
+    setAtivador(event.submitter.innerText);
     setIsQueryEnabled(true);
   };
 
@@ -96,30 +104,29 @@ export default function Listas({ dataChave }) {
 
   return (
     <div className="flex flex-col w-full sm:w-3/5 lg:w-3/5 px-8">
-      <div>
+      <form onSubmit={ativaPega}>
         <div className="break-all flex justify-center gap-3">
           <Botao
             loading={isLoading}
             disabled={isLoading}
-            click={ativaPega}
+            tipo="submit"
             text="Listar certificados"
           />
           <Botao
             loading={isLoading}
             disabled={isLoading}
-            click={ativaPega}
+            tipo="submit"
             text="Listar projetos"
           />
         </div>
         <div className="break-all flex flex-col justify-center">
           <InputElement
             valor={chave}
-            aoAlterado={(valor) => setChave(valor)}
             type="text"
             placeholder="Chave de acesso"
           />
         </div>
-      </div>
+      </form>
       <div className="break-all">
         {data?.map((item, index) => (
           <div key={index}>

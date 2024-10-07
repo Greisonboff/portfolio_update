@@ -6,17 +6,20 @@ import axios from "axios";
 import Imagem from "./Imagem";
 import Loader from "../../load/Loader";
 import Status from "../../status/Status";
+import { useGlobalStore } from "../../store/useGlobalStore";
+import { setDataKey } from "../../../utils/setKeyGit";
 
-export default function UpImg({ dataChave }) {
-  const [chave, setChave] = useState(dataChave());
-  const [img, setImg] = useState("");
+export default function UpImg() {
+  const { chave, setChave } = useGlobalStore();
   const [load, setLoad] = useState("");
   const [retorno, setRetorno] = useState("");
   const objImagens = [];
 
-  const uploadImage = (imgTxt, tk) => {
+  const [imgFiles, setImgFiles] = useState([]);
+
+  const uploadImage = (imgTxt) => {
     event.preventDefault();
-    const token = tk;
+    const token = chave;
     const fileInput = document.getElementById("imageInput").files;
 
     if (fileInput.length === 0) {
@@ -52,7 +55,7 @@ export default function UpImg({ dataChave }) {
             if (fileInput[index + 1]) {
               send(fileInput[index + 1], index + 1, imgTxt);
             } else {
-              localStorage.setItem("chave_de_acesso_github", token);
+              setDataKey(token);
               setLoad("");
               setRetorno("Imagens enviadas com sucesso!");
               enviaObJImg(token, objImagens, imgTxt);
@@ -138,13 +141,10 @@ export default function UpImg({ dataChave }) {
   const salvarInfoProjeto = () => {
     setLoad(true);
     event.preventDefault();
-    uploadImage(img, chave);
-    setImg("");
-    //setChave('')
+    setChave(event.target[2].value);
+    uploadImage(event.target[1].value);
     setImgFiles([]);
   };
-
-  const [imgFiles, setImgFiles] = useState([]);
 
   const mostraImagens = () => {
     const files = event.target.files;
@@ -188,20 +188,14 @@ export default function UpImg({ dataChave }) {
         </div>
         {imgFiles.length > 0 ? (
           <>
-            <InputElement
-              valor={img}
-              aoAlterado={(valor) => setImg(valor)}
-              type="text"
-              placeholder="Nome das imagens"
-            />
+            <InputElement type="text" placeholder="Nome das imagens" />
             <InputElement
               valor={chave}
-              aoAlterado={(valor) => setChave(valor)}
               type="text"
               placeholder="Chave de acesso"
             />
             <div className="pt-4">
-              <Botao className="w-full" text="Salvar" />
+              <Botao tipo="submit" className="w-full" text="Salvar" />
             </div>
           </>
         ) : (
