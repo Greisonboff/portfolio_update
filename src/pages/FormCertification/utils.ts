@@ -47,6 +47,7 @@ export async function sendDataCertificate({
       });
 
     if (!response) return { message: "Erro na operação", isValid: false };
+
     const currentContent = JSON.parse(
       decodeURIComponent(escape(atob(response?.data.content)))
     );

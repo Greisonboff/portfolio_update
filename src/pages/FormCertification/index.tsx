@@ -25,7 +25,6 @@ export default function FormCertification() {
     enabled: isQueryEnabled,
   });
 
-  console.log("chave: ", chave);
   const forInitialValues = {
     categoria: "",
     link: "",
@@ -37,7 +36,6 @@ export default function FormCertification() {
   useEffect(() => {
     console.log("data: ", data);
     if (isSuccess && data?.isValid) {
-      console.log("sucesso")
       setOpenFeedBack({
         isOpen: true,
         message: data.message,
@@ -45,14 +43,16 @@ export default function FormCertification() {
       });
 
       setChave(data.key);
-    }else if (isSuccess && !data?.isValid)  {
-      setOpenFeedBack({ isOpen: true, message: data.message, successStatus: false });
+    } else if (isSuccess && !data?.isValid) {
+      setOpenFeedBack({
+        isOpen: true,
+        message: data.message,
+        successStatus: false,
+      });
     }
   }, [isSuccess]);
 
   const handleSubmit = (values, resetForm) => {
-    console.log("values: ", values);
-
     setSendData({
       categoria: values.categoria.trim(),
       link: values.link.trim(),
@@ -65,8 +65,6 @@ export default function FormCertification() {
 
     resetForm();
   };
-
-  console.log("forInitialValues: ", forInitialValues);
 
   return (
     <Formik
