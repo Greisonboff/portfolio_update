@@ -3,18 +3,12 @@ import ToggleTheme from "../toggle/ToggleTheme";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineCloseSquare } from "react-icons/ai";
 import LogoImg from "../logo/Logo";
-import { useEffect, useState } from "react";
-import { getDataKey } from "../../../utils/setKeyGit";
+import { useState } from "react";
 import { useGlobalStore } from "../../store/useGlobalStore";
 
 export default function Header() {
   const [iconMenu, setIconMenu] = useState(false);
   const { setChave } = useGlobalStore();
-
-  useEffect(() => {
-    const chave = getDataKey();
-    setChave(chave);
-  }, []);
 
   const ativaMenu = () => {
     const element = document.querySelector(".menu-links").classList;

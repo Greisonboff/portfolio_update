@@ -46,6 +46,7 @@ export async function sendDataCertificate({
         return null;
       });
 
+    if (!response) return { message: "Erro na operação", isValid: false };
     const currentContent = JSON.parse(
       decodeURIComponent(escape(atob(response?.data.content)))
     );
@@ -72,7 +73,11 @@ export async function sendDataCertificate({
     const result = await axios
       .put(apiUrl, JSON.stringify(newData), { headers })
       .then((response) => {
-        return { message: "Operação concluída com sucesso", isValid: true };
+        return {
+          message: "Operação concluída com sucesso",
+          isValid: true,
+          key: token,
+        };
       })
       .catch((error) => {
         return { message: "Erro na operação", isValid: false };
@@ -80,7 +85,7 @@ export async function sendDataCertificate({
       });
     return result;
   } catch (error) {
-    return { message: "Erro na operação", isValid: false };
     console.error("Erro:", error);
+    return { message: "Erro na operação", isValid: false };
   }
 }

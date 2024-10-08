@@ -6,6 +6,7 @@ export default function InputElement({
   aoAlterado,
   valor,
   name,
+  change,
 }) {
   const aoDigitado = (event) => {
     aoAlterado?.(event.target.value);
@@ -17,7 +18,7 @@ export default function InputElement({
       <input
         className="outline-none p-2 rounded-md dark:bg-zinc-700 dark:placeholder-slate-200 dark:text-white border-solid border-2 bg-white dark:border-0 border-slate-950 placeholder-slate-600"
         type={type}
-        onChange={aoDigitado}
+        onChange={aoAlterado ? aoDigitado : change}
         value={valor}
         required
         placeholder={placeholder}
