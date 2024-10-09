@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import InputElement from "../../components/InputElement";
-import TituloForm from "../../components/titleFrom/TituloFrom";
+import TitleFrom from "../../components/TitleFrom";
 import { useGlobalStore } from "../../store/useGlobalStore";
 import Botao from "../../components/Botao";
 import { useQuery } from "@tanstack/react-query";
@@ -75,7 +75,7 @@ export default function FormCertification() {
     >
       {({ values, handleChange }) => (
         <Form className="shadow-black dark:shadow-white shadow flex flex-col sm:h-[90%] h-min lg:h-[90%] lg:w-1/2 sm:w-1/2 w-auto bg-transparent p-5 rounded-lg m-2 lg:m-5">
-          <TituloForm titulo={"Cadastrar nova certificação"} />
+          <TitleFrom titulo={"Cadastrar nova certificação"} />
           <InputElement
             valor={values.categoria}
             change={handleChange}

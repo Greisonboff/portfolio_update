@@ -1,4 +1,4 @@
-import imagemFundo from "../../imagens/hello-world-unscreen.gif";
+import imagemFundo from "/images/hello-world-unscreen.gif";
 export default function Home() {
   return (
     <div className="absolute sm:relative sm:rounded-[3%] sm:m-6 bg-[#000] bg-center w-full h-full bg-no-repeat flex justify-center">

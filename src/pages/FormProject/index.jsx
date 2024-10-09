@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Botao from "../../components/Botao";
 import InputElement from "../../components/InputElement";
-import TituloForm from "../../components/titleFrom/TituloFrom";
+import TitleFrom from "../../components/TitleFrom";
 import axios from "axios";
-import Texto from "../../components/texto/Texto";
-import Loader from "../../load/Loader";
+import Textarea from "../../components/Textarea";
+import Loader from "../../components/Loader";
 import Status from "../../status/Status";
 import { v4 as uuidv4 } from "uuid";
 
@@ -114,7 +114,7 @@ export default function FormProject() {
         onSubmit={salvarInfoProjeto}
         className="shadow-black dark:shadow-white shadow flex flex-col lg:h-[140%] lg:w-1/2 sm:w-1/2 w-auto bg-transparent p-5 rounded-lg m-2 lg:m-5"
       >
-        <TituloForm titulo={"Cadastrar novo projeto"} />
+        <TitleFrom titulo={"Cadastrar novo projeto"} />
         <InputElement
           valor={nome}
           aoAlterado={(valor) => setNome(valor)}
@@ -133,7 +133,7 @@ export default function FormProject() {
           type="text"
           placeholder="Link do github"
         />
-        <Texto
+        <Textarea
           valor={descricao}
           aoAlterado={(valor) => setDescricao(valor)}
           type="text"

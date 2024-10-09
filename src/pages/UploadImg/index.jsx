@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Botao from "../../components/Botao";
 import InputElement from "../../components/InputElement";
-import TituloForm from "../../components/titleFrom/TituloFrom";
+import TitleFrom from "../../components/TitleFrom";
 import axios from "axios";
 import Imagem from "./Imagem";
-import Loader from "../../load/Loader";
+import Loader from "../../components/Loader";
 import Status from "../../status/Status";
 import { useGlobalStore } from "../../store/useGlobalStore";
 import { setDataKey } from "../../../utils/setKeyGit";
@@ -169,7 +169,7 @@ export default function UpImg() {
         onSubmit={salvarInfoProjeto}
         className="shadow-black dark:shadow-white shadow flex flex-col w-full sm:w-2/3 bg-transparent p-5 rounded-lg m-2 lg:m-5"
       >
-        <TituloForm titulo={"Carregar imagens"} />
+        <TitleFrom titulo={"Carregar imagens"} />
         <label className="dark:bg-zinc-800 font-semibold bg-zinc-400 dark:text-slate-300 text-slate-900 m-6 h-16 w-2/3 mx-auto rounded-md flex justify-center items-center">
           <input
             className="hidden"

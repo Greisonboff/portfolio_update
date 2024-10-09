@@ -1,5 +1,5 @@
 import Link_header from "./LinkHeader";
-import ToggleTheme from "../toggle/ToggleTheme";
+import ToggleTheme from "../ToggleTheme";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineCloseSquare } from "react-icons/ai";
 import Logo from "../Logo";
