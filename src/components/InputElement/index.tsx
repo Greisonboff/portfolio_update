@@ -1,5 +1,13 @@
 import TituloInput from "../titleInput/TituloInput";
 
+interface CustomInputProp {
+  type?: string;
+  placeholder: string;
+  aoAlterado?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  valor?: string;
+  name?: string;
+  change?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
 export default function InputElement({
   type = "text",
   placeholder,
@@ -7,7 +15,7 @@ export default function InputElement({
   valor,
   name,
   change,
-}) {
+}: CustomInputProp) {
   const aoDigitado = (event) => {
     aoAlterado?.(event.target.value);
   };

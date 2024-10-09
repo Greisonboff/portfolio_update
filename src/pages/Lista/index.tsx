@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Botao from "../../components/Botao";
-import InputElement from "../../components/inputs/InputElement";
+import InputElement from "../../components/InputElement";
 import { useGlobalStore } from "../../store/useGlobalStore";
 import ModalEdit from "./components/ModalEditar";
 import { useQuery } from "@tanstack/react-query";

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Botao from "../../components/Botao";
-import InputElement from "../../components/inputs/InputElement";
+import InputElement from "../../components/InputElement";
 import TituloForm from "../../components/titleFrom/TituloFrom";
 import axios from "axios";
 import Imagem from "./Imagem";

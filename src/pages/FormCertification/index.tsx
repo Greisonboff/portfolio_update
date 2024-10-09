@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import InputElement from "../../components/inputs/InputElement";
+import InputElement from "../../components/InputElement";
 import TituloForm from "../../components/titleFrom/TituloFrom";
 import { useGlobalStore } from "../../store/useGlobalStore";
 import Botao from "../../components/Botao";
