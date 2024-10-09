@@ -5,7 +5,7 @@ import TitleFrom from "../../components/TitleFrom";
 import axios from "axios";
 import Imagem from "./Imagem";
 import Loader from "../../components/Loader";
-import Status from "../../status/Status";
+import Status from "../../components/Status";
 import { useGlobalStore } from "../../store/useGlobalStore";
 import { setDataKey } from "../../../utils/setKeyGit";
 

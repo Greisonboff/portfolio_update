@@ -5,7 +5,7 @@ import TitleFrom from "../../components/TitleFrom";
 import axios from "axios";
 import Textarea from "../../components/Textarea";
 import Loader from "../../components/Loader";
-import Status from "../../status/Status";
+import Status from "../../components/Status";
 import { v4 as uuidv4 } from "uuid";
 
 export default function FormProject() {
