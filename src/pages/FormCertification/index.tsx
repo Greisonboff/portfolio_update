@@ -5,7 +5,7 @@ import { useGlobalStore } from "../../store/useGlobalStore";
 import Botao from "../../components/Botao";
 import { useQuery } from "@tanstack/react-query";
 import { SendDataCertificate, sendDataCertificate } from "./utils";
-import { Formik, Field, Form, FormikHelpers } from "formik";
+import { Formik, Form } from "formik";
 
 interface Data {
   isValid: boolean;

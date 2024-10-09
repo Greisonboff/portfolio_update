@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Botao from "../../components/Botao";
-import axios from "axios";
 import InputElement from "../../components/inputs/InputElement";
 import { useGlobalStore } from "../../store/useGlobalStore";
 import ModalEdit from "./components/ModalEditar";
@@ -8,75 +7,30 @@ import { useQuery } from "@tanstack/react-query";
 import { deletData } from "./services/deletData";
 import ModalExcluir from "./components/ModalExcluir";
 import { queryClient } from "../../main";
-import { setDataKey } from "../../../utils/setKeyGit";
+import { Formik, Form } from "formik";
+import { getData } from "./services/getData";
 
+interface CustomListProps {
+  label?: string;
+  description?: string;
+}
 export default function Listas() {
   const [isQueryEnabled, setIsQueryEnabled] = useState(false);
   const [ativador, setAtivador] = useState("");
 
-  const {
-    chave,
-    setChave,
-    setEditItemModal,
-    setListType,
-    setOpenDeletModal,
-    setOpenFeedBack,
-  } = useGlobalStore();
+  const { chave, setChave, setEditItemModal, setListType, setOpenDeletModal } =
+    useGlobalStore();
 
-  const fetchData = async (chave, ativador) => {
-    try {
-      const pathToFile =
-        ativador === "Listar certificados"
-          ? `certificate.json`
-          : "projetos.json";
-      const token = chave;
-
-      const apiUrl = `${import.meta.env.VITE_API_URL_BASE}${pathToFile}`;
-      const headers = {
-        Authorization: `token ${token}`,
-        "Content-Type": "application/json;charset=UTF-8",
-      };
-
-      const config = {
-        headers: headers,
-      };
-
-      const response = await axios.get(apiUrl, config);
-
-      console.log("re: ", response);
-      const currentContent = JSON.parse(
-        decodeURIComponent(escape(atob(response.data.content)))
-      );
-      console.log("currentContent: ", currentContent);
-      return currentContent;
-    } catch (error) {
-      throw new Error(`Erro: ${error.message}`);
-    }
-  };
-
-  const { data, isError, isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["getListings", chave, ativador],
-    queryFn: () => fetchData(chave, ativador),
+    queryFn: () => getData(chave, ativador),
 
     enabled: isQueryEnabled,
-    onSuccess: (data) => {
-      console.log("data in q: ", data);
-      setDataKey(chave);
-    },
-    onError: () => {
-      setOpenFeedBack({
-        isOpen: true,
-        message: "Erro ao buscar os dados",
-        successStatus: false,
-      });
-    },
   });
-  console.log("data is: ", data);
 
-  const ativaPega = () => {
-    event.preventDefault();
-    setChave(event.target[2].value);
-    setAtivador(event.submitter.innerText);
+  const handleSubmit = (values) => {
+    setAtivador(event?.submitter?.innerText);
+    setChave(values.key);
     setIsQueryEnabled(true);
   };
 
@@ -88,7 +42,6 @@ export default function Listas() {
   };
 
   const excluir = (item) => {
-    console.log("item para excluir: ", item.key);
     const listType =
       ativador === "Listar certificados" ? "certificate" : "projetos";
     setOpenDeletModal({
@@ -104,29 +57,40 @@ export default function Listas() {
 
   return (
     <div className="flex flex-col w-full sm:w-3/5 lg:w-3/5 px-8">
-      <form onSubmit={ativaPega}>
-        <div className="break-all flex justify-center gap-3">
-          <Botao
-            loading={isLoading}
-            disabled={isLoading}
-            tipo="submit"
-            text="Listar certificados"
-          />
-          <Botao
-            loading={isLoading}
-            disabled={isLoading}
-            tipo="submit"
-            text="Listar projetos"
-          />
-        </div>
-        <div className="break-all flex flex-col justify-center">
-          <InputElement
-            valor={chave}
-            type="text"
-            placeholder="Chave de acesso"
-          />
-        </div>
-      </form>
+      <Formik
+        onSubmit={(values) => {
+          handleSubmit(values);
+        }}
+        initialValues={{ key: chave }}
+      >
+        {({ values, handleChange }) => (
+          <Form>
+            <div className="break-all flex justify-center gap-3">
+              <Botao
+                loading={isLoading}
+                disabled={isLoading}
+                tipo="submit"
+                text="Listar certificados"
+              />
+              <Botao
+                loading={isLoading}
+                disabled={isLoading}
+                tipo="submit"
+                text="Listar projetos"
+              />
+            </div>
+            <div className="break-all flex flex-col justify-center">
+              <InputElement
+                valor={values.key}
+                change={handleChange}
+                name="key"
+                type="text"
+                placeholder="Chave de acesso"
+              />
+            </div>
+          </Form>
+        )}
+      </Formik>
       <div className="break-all">
         {data?.map((item, index) => (
           <div key={index}>
@@ -168,7 +132,7 @@ export default function Listas() {
   );
 }
 
-function CustomList({ label, description }) {
+function CustomList({ label, description }: CustomListProps) {
   if (!label || !description) {
     return null;
   }
