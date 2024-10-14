@@ -27,12 +27,8 @@ export async function deletData(key, listType, onSucess) {
     const currentContent = JSON.parse(
       decodeURIComponent(escape(atob(response.data.content)))
     );
-    console.log("currentContent: ", currentContent);
 
     const elementEdit = currentContent.filter((element) => element.key !== key);
-    console.log("elementEdit: ", elementEdit);
-
-    console.log("elementEditMerge: ", elementEdit);
 
     // Construa os dados para a atualização
     const newData = {
