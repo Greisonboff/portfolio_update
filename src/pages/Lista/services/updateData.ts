@@ -1,7 +1,15 @@
 import axios from "axios";
 
+interface Props {
+  data: {
+    [key: string]: string;
+  };
+  listType: "projetos" | "certificate";
+  onSucess?: () => void;
+}
+
 // atualiza dados de projetos e certificados
-export async function updateData(data, listType, onSucess) {
+export async function updateData({ data, listType, onSucess }: Props) {
   try {
     // Defina as informações do repositório e do arquivo
     const pathToFile = `${listType}.json`; // Substitua pelo caminho para o arquivo JSON
@@ -27,15 +35,12 @@ export async function updateData(data, listType, onSucess) {
     const currentContent = JSON.parse(
       decodeURIComponent(escape(atob(response.data.content)))
     );
-    console.log("currentContent: ", currentContent);
 
     const elementEdit = currentContent.filter(
       (element) => element.key === data.key
     );
-    console.log("elementEdit: ", elementEdit);
 
     const mergeElement = { ...elementEdit[0], ...data };
-    console.log("teste rebase: ", mergeElement);
 
     const elementEditMerge = currentContent.map((element) => {
       if (element.key === data.key) {
@@ -44,8 +49,6 @@ export async function updateData(data, listType, onSucess) {
         return element;
       }
     });
-
-    console.log("elementEditMerge: ", elementEditMerge);
 
     // Construa os dados para a atualização
     const newData = {
@@ -58,7 +61,6 @@ export async function updateData(data, listType, onSucess) {
 
     // Solicitação PUT para atualizar o arquivo
     await axios.put(apiUrl, JSON.stringify(newData), { headers });
-    console.log("dados atualizados");
 
     onSucess?.();
 

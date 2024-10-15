@@ -8,6 +8,4 @@ export function genereteKey() {
     ...item,
     key: uuidv4(),
   }));
-
-  console.log("new data is: ", updatedData);
 }

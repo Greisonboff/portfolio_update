@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button, Modal, ModalClose, Typography } from "@mui/joy";
+import { Modal, ModalClose, Typography } from "@mui/joy";
 import Sheet from "@mui/joy/Sheet";
 import { useGlobalStore } from "../../../../store/useGlobalStore";
 import Botao from "../../../../components/Botao";

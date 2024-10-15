@@ -25,7 +25,8 @@ export default function ModalEdit() {
       }
       return acc;
     }, {});
-    const response = await updateData(obj, listType);
+
+    const response = await updateData({ data: obj, listType });
 
     setOpenFeedBack({ isOpen: true, successStatus: response });
     setLoad(false);
