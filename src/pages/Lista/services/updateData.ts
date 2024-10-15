@@ -61,7 +61,6 @@ export async function updateData({ data, listType, onSucess }: Props) {
 
     // Solicitação PUT para atualizar o arquivo
     await axios.put(apiUrl, JSON.stringify(newData), { headers });
-    console.log("dados atualizados");
 
     onSucess?.();
 

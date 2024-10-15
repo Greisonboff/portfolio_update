@@ -41,7 +41,6 @@ export async function deletData(key, listType, onSucess) {
     await axios.put(apiUrl, JSON.stringify(newData), { headers });
 
     onSucess?.();
-    console.log("dados atualizados");
 
     return true;
   } catch (error) {

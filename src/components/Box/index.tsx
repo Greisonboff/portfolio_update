@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { getDataKey } from "../../../utils/setKeyGit";
+import { getDataKey, setDataKey } from "../../../utils/setKeyGit";
 import { useGlobalStore } from "../../store/useGlobalStore";
 
 export default function Box({ element }) {
@@ -13,6 +13,12 @@ export default function Box({ element }) {
       setChave(chave);
     }
   }, []);
+
+  useEffect(() => {
+    if (chave !== undefined) {
+      setDataKey(chave);
+    }
+  }, [chave]);
 
   return (
     <div className="flex-wrap h-screen md:h-screen lg:h-screen flex justify-center p-2">

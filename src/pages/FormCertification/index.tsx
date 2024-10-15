@@ -34,7 +34,6 @@ export default function FormCertification() {
   };
 
   useEffect(() => {
-    console.log("data: ", data);
     if (isSuccess && data?.isValid) {
       setOpenFeedBack({
         isOpen: true,

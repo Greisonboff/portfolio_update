@@ -1,9 +1,29 @@
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
-export default async function sendImages(chave, objImagens, msg) {
+interface IFormData {
+  descricao: string;
+  link: string;
+  linkGit: string;
+  nome: string;
+  img: string;
+  msg: string;
+  chave: string;
+}
+
+export default async function sendFormProject({
+  descricao,
+  link,
+  linkGit,
+  nome,
+  img,
+  msg,
+  chave,
+}: IFormData) {
   // Defina as informações do repositório e do arquivo
-  const pathToFile = "objImagens.json"; // Substitua pelo caminho para o arquivo JSON
+  const pathToFile = "projetos.json"; // Substitua pelo caminho para o arquivo JSON
   const token = chave; // Substitua pelo seu token de acesso pessoal
+  const uniqueKey = uuidv4();
 
   // Construa a URL da API do GitHub
   const apiUrl = `${import.meta.env.VITE_API_URL_BASE}${pathToFile}`;
@@ -23,23 +43,30 @@ export default async function sendImages(chave, objImagens, msg) {
   const response = await axios
     .get(apiUrl, config)
     .then((response) => {
-      return response;
+      return { isValid: true, data: response.data };
     })
     .catch((error) => {
       console.error("Erro:", error);
-      return { mesage: "Erro tente novamente!", isValid: false };
+      return { isValid: false, data: error };
     });
 
-  if (!response) {
-    return { mesage: "Erro tente novamente!", isValid: false };
-  }
+  if (!response.isValid)
+    return { isValid: false, message: "Erro tente novamente!" };
+
   const currentContent = JSON.parse(
     decodeURIComponent(escape(atob(response.data.content)))
   );
 
-  objImagens.map((e) => {
-    currentContent.unshift(e);
-  });
+  // Modifique o conteúdo do arquivo conforme necessário
+  var dataAdd = {
+    nome_projeto: nome,
+    descricao: descricao,
+    link: link,
+    link_git: linkGit,
+    caminho_imagem: img,
+    key: uniqueKey,
+  };
+  currentContent.unshift(dataAdd);
 
   // Construa os dados para a atualização
   const newData = {
@@ -48,17 +75,15 @@ export default async function sendImages(chave, objImagens, msg) {
     sha: response.data.sha, // Inclua o SHA atual do arquivo
   };
 
+  // Faça uma solicitação PUT para atualizar o arquivo
   const result = await axios
     .put(apiUrl, JSON.stringify(newData), { headers })
     .then((response) => {
-      return {
-        mesage: "Objeto de imagens atualizado com sucesso!",
-        isValid: true,
-      };
+      return { isValid: true, message: "Projeto cadastrado com sucesso!" };
     })
     .catch((error) => {
       console.error("Erro:", error);
-      return { mesage: "Erro tente novamente!", isValid: false };
+      return { isValid: false, message: "Erro tente novamente!" };
     });
 
   return result;

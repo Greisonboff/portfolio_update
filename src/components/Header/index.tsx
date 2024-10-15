@@ -4,11 +4,9 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineCloseSquare } from "react-icons/ai";
 import Logo from "../Logo";
 import { useState } from "react";
-import { useGlobalStore } from "../../store/useGlobalStore";
 
 export default function Header() {
   const [iconMenu, setIconMenu] = useState(false);
-  const { setChave } = useGlobalStore();
 
   const ativaMenu = () => {
     const element = document.querySelector(".menu-links").classList;

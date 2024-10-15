@@ -35,6 +35,8 @@ export default function UpImg() {
         message: response.message,
       });
 
+      setChave(values.key);
+
       setImgFiles([]);
       resetForm();
     }
